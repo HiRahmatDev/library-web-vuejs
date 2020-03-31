@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Dashboard from '../views/Main/Dashboard.vue';
 
 Vue.use(VueRouter);
 
@@ -7,12 +8,12 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('@/views/Main/Dashboard.vue'),
+    component: Dashboard,
   },
 ];
 
-const router = new VueRouter({
+const dashboard = new VueRouter({
   routes,
 });
 
-export default router;
+export default dashboard;
