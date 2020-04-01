@@ -22,7 +22,7 @@
       </form>
       <ul class="nav-aside">
         <li>
-          <a class="kategori" href="#">All Categories</a>
+          <div class="kategori" href="#">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
             <li>Novel</li>
@@ -32,7 +32,7 @@
           </ul>
         </li>
         <li>
-          <a class="waktu" href="#">All Times</a>
+          <div class="waktu" href="#">All Times</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Newest</li>

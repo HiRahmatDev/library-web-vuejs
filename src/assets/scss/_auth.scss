@@ -12,7 +12,6 @@
   }
 }
 
-
 #login {
   .container-fluid {
     height: 110vh;
@@ -54,7 +53,7 @@
   }
   width: 60vw;
   color: $secondaryColor;
-  background-image: url('/assets/img/hero-login.png');
+  background-image: url('./assets/img/hero-login.png');
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -110,11 +109,11 @@
   }
 
   p {
+    font-weight: 500;
     font-size: 17px;
     line-height: 22px;
     margin-bottom: 42px;
   }
-
 }
 
 #container-register {
@@ -184,6 +183,7 @@ form {
   .grup-btn {
     margin-top: 24px;
     button, a {
+      font-weight: 500;
       margin-right: 12px;
       @include layar(tablet) {
         margin-right: 0;
@@ -205,6 +205,7 @@ footer {
   }
   // margin-top: 4vw;
   p {
+    font-weight: 500;
     color: #D0CCCC;
     max-width: 302px;
     line-height: 22px;
@@ -213,11 +214,6 @@ footer {
     }
   }
 }
-
-
-
-
-
 
 /* 
 ! END OF AUTH

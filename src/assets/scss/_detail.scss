@@ -2,10 +2,6 @@
 ! DETAILS
 */
 
-
-
-
-
 header.container-fluid {
   a.btn-back {
     display: flex;
@@ -30,7 +26,9 @@ header.container-fluid {
       transform: translateY(2px);
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.13);
     }
-    svg {
+    img {
+      height: 20px;
+      width: 20px;
       margin-right: 2px;
       align-self: center;
     }
@@ -156,6 +154,7 @@ header.container-fluid {
 
 .kolom.aksi {
   margin-left: 42px;
+  margin-bottom: 100px;
   width: 30%;
   @include layar(tablet) {
     width: 100%;
@@ -204,10 +203,6 @@ header.container-fluid {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.13);
   }
 }
-
-
-
-
 /* 
 ! END OF DETAILS
 */

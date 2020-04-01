@@ -56,11 +56,12 @@
   li {
     overflow: hidden;
     padding: 4px;
-    a {
+    div {
       position: relative;
       padding: 8px 24px 8px 8px;
       color: black;
       font-weight: 500;
+      cursor: pointer;
       &:hover {
         opacity: .7;
       }
@@ -70,7 +71,7 @@
         content: "";
         height: 100%;
         width: 100%;
-        background-image: url('/assets/img/polygon-arrow.png');
+        background-image: url('./assets/img/polygon-arrow.png');
         background-repeat: no-repeat;
       }
     }
@@ -204,7 +205,6 @@ form.search {
   }
 }
 
-
 .carousel-item {
   box-sizing: content-box !important;
   padding: 0 40px 0;
@@ -244,9 +244,10 @@ form.search {
       // z-index: 1;
       h3 {
         font-size: 37px;
+        font-weight: 500;
       }
       p {
-        font-family: 'Airbnb Cereal App Book';
+        font-family: 'Airbnb Cereal App';
         margin-top: 16px;
       }
 
@@ -421,10 +422,11 @@ section.list-book {
   margin-bottom: 72px;
   li {
     margin-top: 42px;
-    a {
+    a, div {
       position: relative;
       width: 100%;
-      font-size: 25px;
+      font-weight: 500;
+      font-size: 22px;
       color: black;
       cursor: pointer;
       &:hover {
@@ -436,7 +438,7 @@ section.list-book {
         content: "";
         height: 100%;
         width: 100%;
-        background-image: url('/assets/img/polygon-arrow.png');
+        background-image: url('./assets/img/polygon-arrow.png');
         background-repeat: no-repeat;
       }
     }

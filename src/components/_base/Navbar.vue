@@ -1,14 +1,14 @@
 <template>
   <div class="nav">
     <div class="navbar">
-      <div class="burger">
+      <div class="burger" @click="$emit('sendSwipe')" >
         <a>
           <img src="@/assets/img/svg/burger.svg" alt="">
         </a>
       </div>
       <ul>
         <li>
-          <a class="kategori" href="#">All Categories</a>
+          <div class="kategori" href="#">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
             <li>Novel</li>
@@ -18,7 +18,7 @@
           </ul>
         </li>
         <li>
-          <a class="waktu" href="#">All Time</a>
+          <div class="waktu" href="#">All Time</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Last hour</li>
@@ -44,5 +44,10 @@
 <script>
 export default {
   name: 'Navbar',
+  methods: {
+    swipeSide() {
+      console.log(123);
+    },
+  },
 };
 </script>

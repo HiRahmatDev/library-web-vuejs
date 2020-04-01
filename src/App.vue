@@ -4,6 +4,18 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'app',
+  data() {
+    return {
+      publicPath: process.env.BASE_URL,
+    };
+  },
+};
+
+</script>
+
 <style lang="scss">
 @import '@/assets/scss/_font-face.scss';
 @import '@/assets/scss/_reset.scss';
