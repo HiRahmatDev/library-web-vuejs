@@ -1,7 +1,7 @@
 <template>
-  <aside id="menu-profil" class="geser-kiri">
+  <aside id="menu-profil" :class="myClass.geser">
     <div class="nav">
-      <div class="burger">
+      <div class="burger" @click="$emit('sendSwipe')" >
         <a>
           <img src="@/assets/img/svg/burger.svg" alt="">
         </a>
@@ -44,7 +44,7 @@
         <li><a href="#"><p>Explore</p></a></li>
         <li><a href="#"><p>History</p></a></li>
         <li><a class="panggil-modal"><p>Add Book*</p></a></li>
-        <li><a href="/index.html"><p>Log Out</p></a></li>
+        <li><router-link to="/"><p>Log Out</p></router-link></li>
       </ul>
     </div>
   </aside>
@@ -53,5 +53,6 @@
 <script>
 export default {
   name: 'Navside',
+  props: ['myClass'],
 };
 </script>

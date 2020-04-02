@@ -6,7 +6,7 @@
         <router-link :to="'/book/' + book.id">
           <div class="card">
             <div class="container-thumb">
-              <img :src="book.img" alt="Sampul Buku Dilan 1990">
+              <img :src="book.img" alt="">
             </div>
             <h3>{{ book.title }}</h3>
             <p>{{ book.description }}</p>

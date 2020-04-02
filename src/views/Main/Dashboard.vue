@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid" id="dashboard">
-    <Navbar v-on:sendSwipe="swipeSide" />
+  <div class="container-fluid" :class="myClass.menuAktif" id="dashboard">
+    <Navbar v-on:sendSwipe="swipeSide" v-bind:myClass="myClass" />
     <Carousel/>
     <ListBook v-bind:books="books" />
-    <Navside/>
+    <Navside v-on:sendSwipe="swipeSide" v-bind:myClass="myClass" />
   </div>
 </template>
 
@@ -23,11 +23,24 @@ export default {
   },
   methods: {
     swipeSide() {
-      console.log(1);
+      if (this.myClass.menuAktif.length > 0) {
+        this.myClass.menuAktif = '';
+        this.myClass.geser = 'geser-kiri';
+        this.myClass.hiddenToLeft = '';
+      } else if (this.myClass.menuAktif.length === 0) {
+        this.myClass.menuAktif = 'menu-aktif';
+        this.myClass.geser = 'geser-kanan';
+        this.myClass.hiddenToLeft = 'hidden-to-left';
+      }
     },
   },
   data() {
     return {
+      myClass: {
+        menuAktif: '',
+        geser: 'geser-kiri',
+        hiddenToLeft: '',
+      },
       books: [
         {
           id: 1,
@@ -46,6 +59,20 @@ export default {
         {
           id: 3,
           title: 'React JS Crash Course',
+          description: 'Lorem impsumdak asdflja dfuh',
+          author: 'Rahmat Hidayatullah',
+          img: '/img/thumb-buku3.png',
+        },
+        {
+          id: 4,
+          title: 'React JS Crash Course',
+          description: 'Lorem impsumdak asdflja dfuh',
+          author: 'Rahmat Hidayatullah',
+          img: '/img/thumb-buku3.png',
+        },
+        {
+          id: 5,
+          title: 'Vue Js',
           description: 'Lorem impsumdak asdflja dfuh',
           author: 'Rahmat Hidayatullah',
           img: '/img/thumb-buku3.png',

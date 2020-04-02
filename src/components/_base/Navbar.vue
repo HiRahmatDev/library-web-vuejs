@@ -2,7 +2,7 @@
   <div class="nav">
     <div class="navbar">
       <div class="burger" @click="$emit('sendSwipe')" >
-        <a>
+        <a :class="myClass.hiddenToLeft">
           <img src="@/assets/img/svg/burger.svg" alt="">
         </a>
       </div>
@@ -44,10 +44,6 @@
 <script>
 export default {
   name: 'Navbar',
-  methods: {
-    swipeSide() {
-      console.log(123);
-    },
-  },
+  props: ['myClass'],
 };
 </script>
