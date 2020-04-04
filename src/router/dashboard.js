@@ -26,14 +26,20 @@ const routes = [
     component: () => import('@/views/Main/Dashboard.vue'),
   },
   {
-    path: '/book/1',
-    name: 'Books',
-    component: () => import('@/views/Main/Book.vue'),
+    path: '/book',
+    name: 'Book',
+    component: () => import('@/views/Main/Dashboard.vue'),
+  },
+  {
+    path: '/book/:id',
+    name: 'BookDetail',
+    props: true,
+    component: () => import('@/views/Main/BookDetail.vue'),
   },
 ];
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   routes,
 });
 

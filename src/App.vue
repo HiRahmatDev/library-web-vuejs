@@ -85,14 +85,20 @@ body, input {
   justify-content: center;
   align-items: center;
   background-color: rgba(141, 141, 141, 0.541);
-  transition: visibilty ease 1s, opacity ease .4s;
+  transition: visibilty ease 1s, opacity ease .4s, transform ease .2s;
   z-index: 10;
   .modal-content {
-    transform: scale(.8);
+    transform: scale(.6);
     position: relative;
     width: 80%;
+    @include layar(tablet) {
+      // width: 95%;
+      transform: scale(.8);
+      // height: 97%;
+    }
     @include layar(hp) {
       width: 95%;
+      transform: scale(.8);
       // height: 97%;
     }
     background-color: white;
@@ -118,6 +124,7 @@ body, input {
       }
       h2 {
         font-size: 40px;
+        font-weight: 500;
         color: black;
         @include layar(hp) {
           font-size: 30px;
@@ -152,6 +159,7 @@ body, input {
 
         label {
           font-size: 30px;
+          font-weight: 500;
           color: black;
           @include layar(tablet) {
             font-size: 1.2em;
@@ -165,6 +173,7 @@ body, input {
           resize: none;
           box-sizing: border-box;
           font-size: 30px;
+          font-weight: 500;
           color: #C8BABA;
           padding: 18px 22px;
           width: 100%;
@@ -218,6 +227,7 @@ body, input {
 .modal-active {
   visibility: visible;
   opacity: 1;
+  transform: scale(1.2);
 }
 
 @import '@/assets/scss/_auth.scss';

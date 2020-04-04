@@ -22,17 +22,15 @@
       </form>
       <ul class="nav-aside">
         <li>
-          <div class="kategori" href="#">All Categories</div>
+          <div class="kategori">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
-            <li>Novel</li>
-            <li>Sci-Fi</li>
-            <li>Romance</li>
-            <li>Journal</li>
+            <li v-bind:key="category.id"
+                v-for="category in dbCategory.result">{{ category.name_category }}</li>
           </ul>
         </li>
         <li>
-          <div class="waktu" href="#">All Times</div>
+          <div class="waktu">All Times</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Newest</li>
@@ -41,9 +39,9 @@
             <li>Last year</li>
           </ul>
         </li>
-        <li><a href="#"><p>Explore</p></a></li>
-        <li><a href="#"><p>History</p></a></li>
-        <li><a class="panggil-modal"><p>Add Book*</p></a></li>
+        <li><router-link to="book"><p>Explore</p></router-link></li>
+        <li><router-link to="book/history"><p>History</p></router-link></li>
+        <li><a @click="$emit('clickModal')" class="panggil-modal"><p>Add Book*</p></a></li>
         <li><router-link to="/"><p>Log Out</p></router-link></li>
       </ul>
     </div>
@@ -53,6 +51,6 @@
 <script>
 export default {
   name: 'Navside',
-  props: ['myClass'],
+  props: ['myClass', 'dbCategory'],
 };
 </script>

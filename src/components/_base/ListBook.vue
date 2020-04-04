@@ -1,26 +1,23 @@
 <template>
   <section class="list-book">
-    <h2>List Book</h2>
+    <h2>{{ judul }}</h2>
     <div class="book baris">
       <div v-bind:key="book.id" v-for="book in dbBook" class="kolom">
-        <router-link :to="'/book/' + book.id">
-          <div class="card">
-            <div class="container-thumb">
-              <img :src="book.img" alt="">
-            </div>
-            <h3>{{ book.title }}</h3>
-            <p>{{ book.description }}</p>
-          </div>
-        </router-link>
+        <Card v-bind:book="book" />
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import Card from '@/components/_module/Card.vue';
+
 export default {
   name: 'ListBook',
-  props: ['dbBook'],
+  components: {
+    Card,
+  },
+  props: ['dbBook', 'judul'],
 };
 </script>
 
@@ -68,7 +65,7 @@ section.list-book {
       }
       .card {
         width: 100%;
-        height: 90%;
+        height: 100%;
         overflow: hidden;
         box-sizing: border-box;
         .container-thumb {
@@ -91,20 +88,25 @@ section.list-book {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          margin: 12px auto 0;
+          margin: 14px auto 0;
           font-size: 22px;
           font-weight: bold;
           color: #424242;
           text-align: center;
         }
         p {
-          margin: 0 5%;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          width: 89%;
+          height: 60px;
+          overflow: hidden;
+          margin: 20px auto 0;
           font-size: 15px;
           line-height: 20px;
           color: #424242;
           font-weight: 300;
           text-align: center;
-          margin-top: 18px;
         }
       }
     }

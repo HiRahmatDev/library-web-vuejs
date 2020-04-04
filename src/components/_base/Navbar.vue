@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <div class="nav" :class="myClass.navAktif" >
     <div class="navbar">
       <div class="burger" @click="$emit('sendSwipe')" >
         <a :class="myClass.hiddenToLeft">
@@ -8,17 +8,15 @@
       </div>
       <ul>
         <li>
-          <div class="kategori" href="#">All Categories</div>
+          <div class="kategori">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
-            <li>Novel</li>
-            <li>Sci-Fi</li>
-            <li>Romance</li>
-            <li>Journal</li>
+            <li v-bind:key="category.id"
+                v-for="category in dbCategory.result">{{ category.name_category }} </li>
           </ul>
         </li>
         <li>
-          <div class="waktu" href="#">All Time</div>
+          <div class="waktu">All Time</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Last hour</li>
@@ -44,6 +42,6 @@
 <script>
 export default {
   name: 'Navbar',
-  props: ['myClass'],
+  props: ['myClass', 'dbCategory'],
 };
 </script>

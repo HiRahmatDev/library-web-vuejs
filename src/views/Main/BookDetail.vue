@@ -8,41 +8,37 @@
         <div class="edit panggil-modal">Edit</div>
         <div class="delete modal-del">Delete</div>
       </div>
-      <img src="@/assets/img/dilan.jpg" alt="Sampul buku Dilan 1990">
+      <img :src="dbBookDetail.result[0].img" alt="Sampul buku Dilan 1990">
     </header>
     <div class="container">
       <div class="baris">
         <div class="kolom artikel">
           <div class="baris">
             <div class="kolom">
-              <div class="lencana">Novel</div>
+              <div class="lencana">{{ dbBookDetail.result[0].name_category }}</div>
               <div class="judul-buku">
-                <h2>Dilan 1990</h2>
+                <h2>{{ dbBookDetail.result[0].title }}</h2>
               </div>
               <div class="waktu">
                 <p>30 Juni 2019</p>
               </div>
             </div>
             <div class="kolom">
-              <p class="status">Available</p>
+              <div v-if="dbBookDetail.result[0].status === 1" >
+                <p class="status">Available</p>
+              </div>
+              <div v-else="" >
+                <p class="status not-avail">Not Available</p>
+              </div>
             </div>
           </div>
           <div class="baris">
-            <p class="deskripsi">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Quos amet repellat ducimus? Odit debitis, eos id incidunt perferendis veniam
-              enim voluptate quia asperiores, accusantium nesciunt provident facilis soluta
-              culpa autem sunt quis nisi, cumque quisquam laboriosam placeat? Maiores nemo
-              inventore assumenda voluptates laboriosam, cum perferendis, magni ipsum voluptate
-              ipsam possimus soluta qui repellat quos et! Quas iste pariatur consectetur, numquam
-              fugit quam voluptatem beatae impedit. Quisquam suscipit iste officiis corporis quia
-              facilis consequuntur modi, quos consequatur? Animi facilis eos autem reprehenderit
-              consequuntur atque, earum nulla vitae enim fuga suscipit numquam praesentium, maxime
-              laborum fugiat harum soluta minima dicta quidem impedit.</p>
+            <p class="deskripsi">{{ dbBookDetail.result[0].description }}</p>
           </div>
         </div>
         <div class="kolom aksi">
           <div class="baris">
-            <img src="@/assets/img/dilan-cover-book.png" alt="" class="sampul-buku">
+            <img :src="dbBookDetail.result[0].img" alt="" class="sampul-buku">
           </div>
           <div class="baris">
             <a href="#" class="btn-pinjam">Borrow</a>
@@ -90,3 +86,26 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'BookDetail',
+  props: ['id'],
+  data() {
+    return {
+      dbBookDetail: {},
+    };
+  },
+  mounted() {
+    axios.get(`http://localhost:8000/api/v1/book/${this.id}`)
+      .then((res) => {
+        this.dbBookDetail = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+};
+</script>
