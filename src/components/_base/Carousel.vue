@@ -5,7 +5,7 @@
     </button>
     <div class="carousel-wrap track">
       <router-link :to="'/book/' + book.id" v-for="book in dbBook"
-                                v-bind:key="book.id" class="carousel-item current__slide">
+        v-bind:key="book.id" class="carousel-item">
         <div class="carousel-card">
           <img :src="book.img" alt="">
           <div class="description">

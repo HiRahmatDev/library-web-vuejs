@@ -1,5 +1,5 @@
 <template>
-  <div class="nav" :class="myClass.navAktif" >
+  <div class="nav" >
     <div class="navbar">
       <div class="burger" @click="$emit('sendSwipe')" >
         <a :class="myClass.hiddenToLeft">

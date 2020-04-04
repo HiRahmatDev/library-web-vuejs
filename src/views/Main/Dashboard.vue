@@ -77,9 +77,6 @@ export default {
       }
     },
   },
-  beforeMount() {
-    console.log('hi');
-  },
   mounted() {
     axios.get('http://localhost:8000/api/v1/book')
       .then((res) => {
@@ -100,18 +97,6 @@ export default {
 
     /* eslint-disable no-param-reassign */
     /* eslint-disable no-plusplus */
-
-    window.addEventListener('scroll', () => {
-      const nav = document.querySelector('.nav');
-      const carousel = document.querySelector('.carousel');
-      if (window.pageYOffset < 75) {
-        nav.classList.remove('to-fixed');
-        carousel.classList.remove('nav-fixed');
-      } else {
-        nav.classList.add('to-fixed');
-        carousel.classList.add('nav-fixed');
-      }
-    });
 
     const kategori = document.querySelectorAll('.kategori');
     const waktu = document.querySelectorAll('.waktu');
@@ -151,73 +136,38 @@ export default {
       });
     });
 
-    window.addEventListener('load', () => {
-      const track = document.querySelector('.track');
-      const carouselItem = Array.from(track.children);
-      carouselItem.forEach((item) => {
-        item.classList.remove('current__slide');
-      });
-      carouselItem[1].classList.add('current__slide');
-      const nextButton = document.querySelector('.next-btn');
-      const prevButton = document.querySelector('.prev-btn');
-      const slideWidth = track.querySelector('.current__slide').clientWidth;
-      let urutan = 1;
-      track.style.transform = `translateX(${-slideWidth * urutan}px)`;
-      const zoomIn = (currentSlide, targetSlide) => {
-        currentSlide.classList.remove('current__slide');
-        targetSlide.classList.add('current__slide');
-      };
-      nextButton.addEventListener('click', () => {
-        const currentSlide = track.querySelector('.current__slide');
-        const nextSlide = currentSlide.nextElementSibling;
-        const widthNextSlide = nextSlide.clientWidth;
-        zoomIn(currentSlide, nextSlide);
-        urutan++;
-        track.style.transform = `translateX(${-widthNextSlide * urutan}px)`;
-      });
-      prevButton.addEventListener('click', () => {
-        const currentSlide = track.querySelector('.current__slide');
-        const prevSlide = currentSlide.previousElementSibling;
-        const widthPrevSlide = prevSlide.clientWidth;
-        zoomIn(currentSlide, prevSlide);
-        urutan--;
-        track.style.transform = `translateX(${-widthPrevSlide * urutan}px)`;
-      });
+    const track = document.querySelector('.track');
+    const nextButton = document.querySelector('.next-btn');
+    const prevButton = document.querySelector('.prev-btn');
+    let urutan = 1;
+    const zoomIn = (currentSlide, targetSlide) => {
+      currentSlide.classList.remove('current__slide');
+      targetSlide.classList.add('current__slide');
+    };
+    nextButton.addEventListener('click', () => {
+      const currentSlide = track.querySelector('.current__slide');
+      const nextSlide = currentSlide.nextElementSibling;
+      const widthNextSlide = nextSlide.clientWidth;
+      zoomIn(currentSlide, nextSlide);
+      urutan++;
+      track.style.transform = `translateX(${-widthNextSlide * urutan}px)`;
+    });
+    prevButton.addEventListener('click', () => {
+      const currentSlide = track.querySelector('.current__slide');
+      const prevSlide = currentSlide.previousElementSibling;
+      const widthPrevSlide = prevSlide.clientWidth;
+      zoomIn(currentSlide, prevSlide);
+      urutan--;
+      track.style.transform = `translateX(${-widthPrevSlide * urutan}px)`;
     });
   },
-  // updated() {
-  //   const track = document.querySelector('.track');
-  //   const carouselItem = Array.from(track.children);
-  //   carouselItem.forEach((item) => {
-  //     item.classList.remove('current__slide');
-  //   });
-  //   carouselItem[1].classList.add('current__slide');
-  //   const nextButton = document.querySelector('.next-btn');
-  //   const prevButton = document.querySelector('.prev-btn');
-  //   const slideWidth = track.querySelector('.current__slide').clientWidth;
-  //   let urutan = 1;
-  //   track.style.transform = `translateX(${-slideWidth * urutan}px)`;
-  //   const zoomIn = (currentSlide, targetSlide) => {
-  //     currentSlide.classList.remove('current__slide');
-  //     targetSlide.classList.add('current__slide');
-  //   };
-  //   nextButton.addEventListener('click', () => {
-  //     const currentSlide = track.querySelector('.current__slide');
-  //     const nextSlide = currentSlide.nextElementSibling;
-  //     const widthNextSlide = nextSlide.clientWidth;
-  //     // zoomIn(currentSlide, nextSlide);
-  //     urutan++;
-  //     track.style.transform = `translateX(${-widthNextSlide * urutan}px)`;
-  //   });
-  //   prevButton.addEventListener('click', () => {
-  //     const currentSlide = track.querySelector('.current__slide');
-  //     const prevSlide = currentSlide.previousElementSibling;
-  //     const widthPrevSlide = prevSlide.clientWidth;
-  //     zoomIn(currentSlide, prevSlide);
-  //     urutan--;
-  //     track.style.transform = `translateX(${-widthPrevSlide * urutan}px)`;
-  //   });
-  // },
+  beforeUpdate() {
+    const track = document.querySelector('.track');
+    const carouselItem = Array.from(track.children);
+    carouselItem[1].classList.add('current__slide');
+    const slideWidth = track.querySelector('.current__slide').clientWidth;
+    track.style.transform = `translateX(${-slideWidth}px)`;
+  },
 };
 
 </script>

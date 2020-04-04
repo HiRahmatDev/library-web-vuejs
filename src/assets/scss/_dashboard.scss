@@ -2,10 +2,6 @@
 ! DASHBOARD
 */
 
-.nav.to-fixed {
-  position: fixed;
-  top: 0;
-}
 .nav {
   position: relative;
   width: 100%;
@@ -257,6 +253,9 @@ form.search {
       box-sizing: border-box;
       // z-index: 1;
       h3 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-size: 37px;
         font-weight: 500;
       }
