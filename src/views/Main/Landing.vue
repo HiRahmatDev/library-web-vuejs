@@ -78,7 +78,7 @@
           </div>
           <div class="row justify-content-center">
             <div class="col-12 text-center">
-              <router-link to="login.html" class="btn btn-prim px-auto mb-5 mt-4 py-4">
+              <router-link to="login" class="btn btn-prim px-auto mb-5 mt-4 py-4">
                 Login
               </router-link>
             </div>
@@ -100,6 +100,16 @@
 
 export default {
   name: 'Landing',
+  updated() {
+    if (localStorage.salt) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard');
+    }
+  },
+  created() {
+    if (localStorage.salt) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard');
+    }
+  },
 };
 
 </script>

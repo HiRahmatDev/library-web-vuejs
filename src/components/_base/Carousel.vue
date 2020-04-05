@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel">
+  <div class="carousel nav-fixed">
     <button class="prev-btn">
       <img src="@/assets/img/left-arrow2.png" alt="">
     </button>

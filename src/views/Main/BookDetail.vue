@@ -98,6 +98,11 @@ export default {
       dbBookDetail: {},
     };
   },
+  updated() {
+    if (!localStorage.salt && this.$route.path !== '/login') {
+      this.$router.push('/login');
+    }
+  },
   mounted() {
     axios.get(`http://localhost:8000/api/v1/book/${this.id}`)
       .then((res) => {

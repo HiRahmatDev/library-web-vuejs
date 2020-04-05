@@ -47,6 +47,15 @@
 
 <script>
 export default {
-
+  updated() {
+    if (localStorage.salt) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard');
+    }
+  },
+  created() {
+    if (localStorage.salt) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard');
+    }
+  },
 };
 </script>

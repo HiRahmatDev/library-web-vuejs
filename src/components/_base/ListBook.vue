@@ -60,6 +60,9 @@ section.list-book {
       box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
       border-radius: 15px;
       overflow: hidden;
+      &:hover .card .container-thumb img{
+        transform: scale(1.07);
+      }
       @include layar(hp) {
         width: 100%;
       }
@@ -77,9 +80,6 @@ section.list-book {
             object-fit: cover;
             transform: scale(1.005);
             transition: transform ease .5s;
-            &:hover {
-              transform: scale(1.07);
-            }
           }
         }
         h3 {

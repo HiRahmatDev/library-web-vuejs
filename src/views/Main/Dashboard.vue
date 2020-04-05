@@ -1,25 +1,25 @@
 <template>
   <div class="container-fluid" :class="myClass.menuAktif" id="dashboard">
-    <Navbar v-on:sendSwipe="swipeSide"
-            v-bind:myClass="myClass"
-            v-bind:dbCategory="dbCategory"
-    />
     <Navside v-on:clickModal="tampilModal"
              v-on:sendSwipe="swipeSide"
-             v-bind:myClass="myClass"
-             v-bind:dbCategory="dbCategory"
+             :myClass="myClass"
+             :api="api"
+    />
+    <Navbar v-on:sendSwipe="swipeSide"
+            :myClass="myClass"
+            :api="api"
     />
     <div v-if="listBook == 'List Book' || listBook == 'All Categories'"  >
-      <Carousel v-bind:dbBook="dbBook.result" />
+      <Carousel v-bind:dbBook="api.book.result" />
     </div>
     <div v-else  >
-      <Carousel class="collapse" v-bind:dbBook="dbBook.result" />
+      <Carousel class="collapse" :dbBook="api.book.result" />
     </div>
-    <ListBook v-bind:dbBook="dbBook.result"
-              v-bind:judul="listBook"
+    <ListBook :dbBook="api.book.result"
+              :judul="listBook"
     />
     <ModalSidebar v-on:closeModal="tampilModal"
-                  v-bind:myClass="myClass" />
+                  :myClass="myClass" />
   </div>
 </template>
 
@@ -49,8 +49,11 @@ export default {
         hiddenToLeft: '',
         modalActive: '',
       },
-      dbBook: {},
-      dbCategory: {},
+      api: {
+        book: {},
+        category: {},
+        user: {},
+      },
       listBook: 'List Book',
       query: this.$route.query,
     };
@@ -77,11 +80,11 @@ export default {
       }
     },
   },
-  mounted() {
+  beforeMount() {
+    const that = this;
     axios.get('http://localhost:8000/api/v1/book')
       .then((res) => {
-        this.dbBook = res.data;
-        console.log(res);
+        that.api.book = res.data;
       })
       .catch((err) => {
         console.log(err);
@@ -89,15 +92,53 @@ export default {
 
     axios.get('http://localhost:8000/api/v1/category')
       .then((res) => {
-        this.dbCategory = res.data;
+        this.api.category = res.data;
       })
       .catch((err) => {
         console.log(err);
       });
 
+    axios.get(`http://localhost:8000/api/v1/user/${localStorage.idUser}`)
+      .then((res) => {
+        that.api.user = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  beforeUpdate() {
+    const that = this;
+    if (this.listBook.toLowerCase() === 'list book' || this.listBook.toLowerCase() === 'all categories') {
+      axios.get('http://localhost:8000/api/v1/book')
+        .then((res) => {
+          that.api.book = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios.get(`http://localhost:8000/api/v1/book?search=${this.listBook.toLowerCase()}`)
+        .then((res) => {
+          that.api.book = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },
+  updated() {
+    if (!localStorage.salt && this.$route.path !== '/login') {
+      this.$router.push('/login');
+    }
+    const track = document.querySelector('.track');
+    const carouselItem = Array.from(track.children);
+    carouselItem[1].classList.add('current__slide');
+    const slideWidth = track.querySelector('.current__slide').clientWidth;
+    track.style.transform = `translateX(${-slideWidth}px)`;
+  },
+  mounted() {
     /* eslint-disable no-param-reassign */
     /* eslint-disable no-plusplus */
-
     const kategori = document.querySelectorAll('.kategori');
     const waktu = document.querySelectorAll('.waktu');
     kategori.forEach((k) => {
@@ -160,13 +201,6 @@ export default {
       urutan--;
       track.style.transform = `translateX(${-widthPrevSlide * urutan}px)`;
     });
-  },
-  beforeUpdate() {
-    const track = document.querySelector('.track');
-    const carouselItem = Array.from(track.children);
-    carouselItem[1].classList.add('current__slide');
-    const slideWidth = track.querySelector('.current__slide').clientWidth;
-    track.style.transform = `translateX(${-slideWidth}px)`;
   },
 };
 

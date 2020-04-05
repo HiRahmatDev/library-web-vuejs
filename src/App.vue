@@ -1,16 +1,24 @@
 <template>
-  <div id="app">
+  <div id="library">
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
+  name: 'Library',
   data() {
     return {
       publicPath: process.env.BASE_URL,
     };
+  },
+  watch: {
+    $route: {
+      handler: (to) => {
+        document.title = to.meta.title || 'Library';
+      },
+      immediate: true,
+    },
   },
 };
 

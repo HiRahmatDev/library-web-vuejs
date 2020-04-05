@@ -9,8 +9,8 @@
     </div>
     <div class="container center">
       <div class="foto-profil">
-        <img src="@/assets/img/Niki Zefanya.png" alt="">
-        <h2>Niki Zefanya</h2>
+        <img :src="api.user.result[0].photo" alt="">
+        <h2>{{ api.user.result[0].fullname }}</h2>
       </div>
     </div>
     <div class="container">
@@ -25,8 +25,8 @@
           <div class="kategori">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
-            <li v-bind:key="category.id"
-                v-for="category in dbCategory.result">{{ category.name_category }}</li>
+            <li :key="category.id"
+                v-for="category in api.category.result">{{ category.name_category }}</li>
           </ul>
         </li>
         <li>
@@ -42,7 +42,7 @@
         <li><router-link to="book"><p>Explore</p></router-link></li>
         <li><router-link to="book/history"><p>History</p></router-link></li>
         <li><a @click="$emit('clickModal')" class="panggil-modal"><p>Add Book*</p></a></li>
-        <li><router-link to="/"><p>Log Out</p></router-link></li>
+        <li><router-link to="/logout"><p>Log Out</p></router-link></li>
       </ul>
     </div>
   </aside>
@@ -51,6 +51,6 @@
 <script>
 export default {
   name: 'Navside',
-  props: ['myClass', 'dbCategory'],
+  props: ['myClass', 'api'],
 };
 </script>

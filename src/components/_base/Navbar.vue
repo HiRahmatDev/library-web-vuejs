@@ -1,5 +1,5 @@
 <template>
-  <div class="nav" >
+  <div class="nav to-fixed" :class="myClass.navAktif" >
     <div class="navbar">
       <div class="burger" @click="$emit('sendSwipe')" >
         <a :class="myClass.hiddenToLeft">
@@ -11,8 +11,8 @@
           <div class="kategori">All Categories</div>
           <ul class="dropdown">
             <li>All Categories</li>
-            <li v-bind:key="category.id"
-                v-for="category in dbCategory.result">{{ category.name_category }} </li>
+            <li :key="category.id"
+                v-for="category in api.category.result">{{ category.name_category }} </li>
           </ul>
         </li>
         <li>
@@ -32,16 +32,16 @@
         <input type="search" placeholder="Search book">
       </div>
     </form>
-    <a href="#" class="logo">
+    <router-link to="/" class="logo">
       <img src="@/assets/img/logo.png" alt="Logo Library">
       <h1>Library</h1>
-    </a>
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Navbar',
-  props: ['myClass', 'dbCategory'],
+  props: ['myClass', 'api'],
 };
 </script>
