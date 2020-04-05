@@ -27,7 +27,7 @@
               <div v-if="dbBookDetail.result[0].status === 1" >
                 <p class="status">Available</p>
               </div>
-              <div v-else="" >
+              <div v-else >
                 <p class="status not-avail">Not Available</p>
               </div>
             </div>
@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <!-- Modal Edit -->
+    <!-- Modal Edit
     <div class="bg-modal">
       <div class="modal-content">
         <button class="close"><img src="@/assets/img/close.png" alt=""></button>
@@ -83,7 +83,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -103,7 +103,7 @@ export default {
       this.$router.push('/login');
     }
   },
-  mounted() {
+  created() {
     axios.get(`http://localhost:8000/api/v1/book/${this.id}`)
       .then((res) => {
         this.dbBookDetail = res.data;

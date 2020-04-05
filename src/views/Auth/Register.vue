@@ -11,22 +11,22 @@
         </a>
         <h1>Register</h1>
         <p>Welcome Back, Please Register<br>to Create Account</p>
-        <form>
+        <form @submit.prevent="register" >
           <div class="grup-input">
             <label for="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname">
+            <input v-model="fullname" type="text" id="fullname">
           </div>
           <div class="grup-input">
             <label for="user">Username</label>
-            <input type="text" id="user" name="user">
+            <input v-model="username" type="text" id="user">
           </div>
           <div class="grup-input">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email">
+            <input v-model="email" type="email" id="email">
           </div>
           <div class="grup-input">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password">
+            <input v-model="password" type="password" id="password">
           </div>
           <div class="grup-btn">
             <button class="btn btn-auth-primary">Sign in</button>
@@ -46,10 +46,54 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  name: 'Register',
+  data() {
+    return {
+      fullname: null,
+      username: null,
+      email: null,
+      password: null,
+      error: false,
+    };
+  },
+  methods: {
+    register() {
+      axios.post('http://localhost:8000/api/v1/register', {
+        fullname: this.fullname,
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      })
+        .then(() => {
+          // console.log(request);
+          this.registerSuccess();
+        })
+        .catch(() => {
+          this.registerFailed();
+        });
+    },
+    registerSuccess() {
+      if (this.fullname === null) {
+        this.registerFailed();
+        return;
+      }
+      this.error = false;
+      this.$router.replace(this.$route.query.redirect || '/login');
+    },
+    registerFailed() {
+      this.error = 'Register Failed!';
+    },
+  },
   updated() {
     if (localStorage.salt) {
       this.$router.replace(this.$route.query.redirect || '/dashboard');
+      return;
+    }
+    if (this.fullname === '') {
+      this.fullname = null;
     }
   },
   created() {

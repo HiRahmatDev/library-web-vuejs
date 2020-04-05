@@ -87,18 +87,15 @@ export default {
       delete localStorage.idUser;
     },
   },
-  updated() {
-    if (localStorage.salt) {
-      this.$router.replace(this.$route.query.redirect || '/dashboard');
-    }
-  },
   created() {
     if (localStorage.salt) {
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     }
   },
-  mounted() {
-    console.log(localStorage);
+  updated() {
+    if (localStorage.salt) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard');
+    }
   },
 };
 </script>

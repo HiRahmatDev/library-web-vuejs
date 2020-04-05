@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid" :class="myClass.menuAktif" id="dashboard">
+    <Navbar v-on:sendSwipe="swipeSide"
+            :myClass="myClass"
+            :api="api"
+    />
     <Navside v-on:clickModal="tampilModal"
              v-on:sendSwipe="swipeSide"
              :myClass="myClass"
              :api="api"
-    />
-    <Navbar v-on:sendSwipe="swipeSide"
-            :myClass="myClass"
-            :api="api"
     />
     <div v-if="listBook == 'List Book' || listBook == 'All Categories'"  >
       <Carousel v-bind:dbBook="api.book.result" />
@@ -80,6 +80,9 @@ export default {
       }
     },
   },
+  // beforeCreate() {
+  //   console.log(document.querySelectorAll('.kategori'));
+  // },
   beforeMount() {
     const that = this;
     axios.get('http://localhost:8000/api/v1/book')
@@ -106,29 +109,31 @@ export default {
         console.log(err);
       });
   },
-  beforeUpdate() {
-    const that = this;
-    if (this.listBook.toLowerCase() === 'list book' || this.listBook.toLowerCase() === 'all categories') {
-      axios.get('http://localhost:8000/api/v1/book')
-        .then((res) => {
-          that.api.book = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      axios.get(`http://localhost:8000/api/v1/book?search=${this.listBook.toLowerCase()}`)
-        .then((res) => {
-          that.api.book = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  },
+  // beforeUpdate() {
+  //   const that = this;
+  //   if (this.listBook.toLowerCase() === 'list book' ||
+  // this.listBook.toLowerCase() === 'all categories') {
+  //     axios.get('http://localhost:8000/api/v1/book')
+  //       .then((res) => {
+  //         that.api.book = res.data;
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     axios.get(`http://localhost:8000/api/v1/book?search=${this.listBook.toLowerCase()}`)
+  //       .then((res) => {
+  //         that.api.book = res.data;
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // },
   updated() {
     if (!localStorage.salt && this.$route.path !== '/login') {
       this.$router.push('/login');
+      return;
     }
     const track = document.querySelector('.track');
     const carouselItem = Array.from(track.children);
@@ -141,6 +146,7 @@ export default {
     /* eslint-disable no-plusplus */
     const kategori = document.querySelectorAll('.kategori');
     const waktu = document.querySelectorAll('.waktu');
+
     kategori.forEach((k) => {
       k.addEventListener('click', () => {
         k.nextElementSibling.classList.toggle('muncul');

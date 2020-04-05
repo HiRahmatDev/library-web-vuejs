@@ -1,5 +1,5 @@
 <template>
-  <div class="nav to-fixed" :class="myClass.navAktif" >
+  <nav class="nav to-fixed" :class="myClass.navAktif" >
     <div class="navbar">
       <div class="burger" @click="$emit('sendSwipe')" >
         <a :class="myClass.hiddenToLeft">
@@ -36,7 +36,7 @@
       <img src="@/assets/img/logo.png" alt="Logo Library">
       <h1>Library</h1>
     </router-link>
-  </div>
+  </nav>
 </template>
 
 <script>
