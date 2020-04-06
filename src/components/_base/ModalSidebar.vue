@@ -82,7 +82,7 @@ export default {
       input.author = this.author;
       input.img = this.img;
       input.id_category = this.category;
-      axios.post('http://localhost:8000/api/v1/book/insert', input)
+      axios.post('http://localhost:3333/api/v1/book/insert', input)
         .then((res) => {
           // console.log(res.data);
           if (res.status === 200) {

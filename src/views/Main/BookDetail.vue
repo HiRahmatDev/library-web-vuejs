@@ -104,13 +104,13 @@ export default {
     }
   },
   created() {
-    axios.get(`http://localhost:8000/api/v1/book/${this.id}`)
+    axios.get(`http://localhost:3333/api/v1/book/${this.id}`)
       .then((res) => {
         this.dbBookDetail = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   },
 };
 </script>

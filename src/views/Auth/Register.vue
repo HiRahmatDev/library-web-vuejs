@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     register() {
-      axios.post('http://localhost:8000/api/v1/register', {
+      axios.post('http://localhost:3333/api/v1/register', {
         fullname: this.fullname,
         username: this.username,
         email: this.email,

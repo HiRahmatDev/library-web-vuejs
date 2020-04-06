@@ -61,19 +61,21 @@ export default {
   },
   methods: {
     login() {
-      axios.post('http://localhost:8000/api/v1/user/login', {
+      axios.post('http://localhost:3333/api/v1/user/login', {
         email: this.email, password: this.password,
       })
         .then((request) => {
+          // console.log(request);
           this.loginSuccess(request);
-        })
-        .catch(() => {
-          this.loginFailed();
         });
     },
     loginSuccess(req) {
-      if (req.data.result[0].status === 0) {
-        this.loginFailed();
+      if (req.data.statusCode !== 200) {
+        this.loginFailed(req);
+        return;
+      }
+      if (req.data.result[0].status !== 1) {
+        this.needActivate();
         return;
       }
       localStorage.salt = req.data.result[0].salt;
@@ -81,8 +83,13 @@ export default {
       this.error = false;
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     },
-    loginFailed() {
-      this.error = 'Login Failed!';
+    loginFailed(err) {
+      this.error = err.data.err;
+      delete localStorage.salt;
+      delete localStorage.idUser;
+    },
+    needActivate() {
+      this.error = 'Email is not Activated!';
       delete localStorage.salt;
       delete localStorage.idUser;
     },

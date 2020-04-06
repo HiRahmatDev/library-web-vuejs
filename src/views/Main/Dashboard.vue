@@ -85,35 +85,26 @@ export default {
   // },
   beforeMount() {
     const that = this;
-    axios.get('http://localhost:8000/api/v1/book')
+    axios.get('http://localhost:3333/api/v1/book')
       .then((res) => {
         that.api.book = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
       });
 
-    axios.get('http://localhost:8000/api/v1/category')
+    axios.get('http://localhost:3333/api/v1/category')
       .then((res) => {
         this.api.category = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
       });
 
-    axios.get(`http://localhost:8000/api/v1/user/${localStorage.idUser}`)
+    axios.get(`http://localhost:3333/api/v1/user/${localStorage.idUser}`)
       .then((res) => {
         that.api.user = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
       });
   },
   // beforeUpdate() {
   //   const that = this;
   //   if (this.listBook.toLowerCase() === 'list book' ||
   // this.listBook.toLowerCase() === 'all categories') {
-  //     axios.get('http://localhost:8000/api/v1/book')
+  //     axios.get('http://localhost:3333/api/v1/book')
   //       .then((res) => {
   //         that.api.book = res.data;
   //       })
@@ -121,7 +112,7 @@ export default {
   //         console.log(err);
   //       });
   //   } else {
-  //     axios.get(`http://localhost:8000/api/v1/book?search=${this.listBook.toLowerCase()}`)
+  //     axios.get(`http://localhost:3333/api/v1/book?search=${this.listBook.toLowerCase()}`)
   //       .then((res) => {
   //         that.api.book = res.data;
   //       })
