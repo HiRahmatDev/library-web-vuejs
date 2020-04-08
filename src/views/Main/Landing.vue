@@ -101,12 +101,12 @@
 export default {
   name: 'Landing',
   updated() {
-    if (localStorage.salt) {
+    if (localStorage.token) {
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     }
   },
   created() {
-    if (localStorage.salt) {
+    if (localStorage.token) {
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     }
   },

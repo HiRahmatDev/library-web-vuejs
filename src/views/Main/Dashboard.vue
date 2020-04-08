@@ -1,29 +1,32 @@
 <template>
-  <div class="container-fluid" :class="myClass.menuAktif" id="dashboard">
-    <Navbar v-on:sendSwipe="swipeSide"
-            :myClass="myClass"
-            :api="api"
-    />
-    <Navside v-on:clickModal="tampilModal"
-             v-on:sendSwipe="swipeSide"
-             :myClass="myClass"
-             :api="api"
-    />
+  <div class="container-fluid" id="dashboard">
+    <Navbar v-on:burgerClicked="showSideNav"
+            v-on:sort-book="sortByCategory"
+            v-on:search-book="search"
+            v-on:enter="hideSideNav"
+            v-on:sortClicked="dDown()" />
+    <Navside v-on:burgerClicked="hideSideNav"
+             v-on:search-book="search"
+             v-on:enter="hideSideNav"
+             v-on:sort-book="sortByCategory"/>
     <div v-if="listBook == 'List Book' || listBook == 'All Categories'"  >
-      <Carousel v-bind:dbBook="api.book.result" />
+      <Carousel v-on:prevButton="prevButton"
+                v-on:nextButton="nextButton"
+                :dbBook="book.result" />
     </div>
     <div v-else  >
-      <Carousel class="collapse" :dbBook="api.book.result" />
+      <Carousel class="collapse" :dbBook="book.result" />
     </div>
-    <ListBook :dbBook="api.book.result"
+    <ListBook :dbBook="book.result"
               :judul="listBook"
     />
-    <ModalSidebar v-on:closeModal="tampilModal"
-                  :myClass="myClass" />
+    <ModalSidebar/>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
 import axios from 'axios';
 import Navbar from '@/components/_base/Navbar.vue';
 import Navside from '@/components/_base/Navside.vue';
@@ -42,161 +45,131 @@ export default {
   },
   data() {
     return {
-      myClass: {
-        menuAktif: '',
-        navAktif: '',
-        geser: 'geser-kiri',
-        hiddenToLeft: '',
-        modalActive: '',
-      },
-      api: {
-        book: {},
-        category: {},
-        user: {},
-      },
+      book: {},
       listBook: 'List Book',
-      query: this.$route.query,
+      counter: 1,
     };
   },
   methods: {
-    swipeSide() {
-      if (this.myClass.menuAktif.length > 0) {
-        this.myClass.menuAktif = '';
-        this.myClass.navAktif = '';
-        this.myClass.geser = 'geser-kiri';
-        this.myClass.hiddenToLeft = '';
-      } else if (this.myClass.menuAktif.length === 0) {
-        this.myClass.menuAktif = 'menu-aktif';
-        this.myClass.navAktif = 'nav-aktif';
-        this.myClass.geser = 'geser-kanan';
-        this.myClass.hiddenToLeft = 'hidden-to-left';
-      }
+    loadBook() {
+      const that = this;
+      axios.get('http://localhost:3333/api/v1/book')
+        .then((res) => {
+          that.book = res.data;
+        });
     },
-    tampilModal() {
-      if (this.myClass.modalActive.length === 0) {
-        this.myClass.modalActive = 'modal-active';
-      } else if (this.myClass.modalActive.length > 0) {
-        this.myClass.modalActive = '';
-      }
+    dDown() {
     },
-  },
-  // beforeCreate() {
-  //   console.log(document.querySelectorAll('.kategori'));
-  // },
-  beforeMount() {
-    const that = this;
-    axios.get('http://localhost:3333/api/v1/book')
-      .then((res) => {
-        that.api.book = res.data;
-      });
-
-    axios.get('http://localhost:3333/api/v1/category')
-      .then((res) => {
-        this.api.category = res.data;
-      });
-
-    axios.get(`http://localhost:3333/api/v1/user/${localStorage.idUser}`)
-      .then((res) => {
-        that.api.user = res.data;
-      });
-  },
-  // beforeUpdate() {
-  //   const that = this;
-  //   if (this.listBook.toLowerCase() === 'list book' ||
-  // this.listBook.toLowerCase() === 'all categories') {
-  //     axios.get('http://localhost:3333/api/v1/book')
-  //       .then((res) => {
-  //         that.api.book = res.data;
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     axios.get(`http://localhost:3333/api/v1/book?search=${this.listBook.toLowerCase()}`)
-  //       .then((res) => {
-  //         that.api.book = res.data;
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // },
-  updated() {
-    if (!localStorage.salt && this.$route.path !== '/login') {
-      this.$router.push('/login');
-      return;
-    }
-    const track = document.querySelector('.track');
-    const carouselItem = Array.from(track.children);
-    carouselItem[1].classList.add('current__slide');
-    const slideWidth = track.querySelector('.current__slide').clientWidth;
-    track.style.transform = `translateX(${-slideWidth}px)`;
-  },
-  mounted() {
-    /* eslint-disable no-param-reassign */
-    /* eslint-disable no-plusplus */
-    const kategori = document.querySelectorAll('.kategori');
-    const waktu = document.querySelectorAll('.waktu');
-
-    kategori.forEach((k) => {
-      k.addEventListener('click', () => {
-        k.nextElementSibling.classList.toggle('muncul');
-        waktu.forEach((w) => {
-          w.nextElementSibling.classList.remove('muncul');
-        });
-        const daftarKategori = Array.from(k.nextElementSibling.children);
-        daftarKategori.forEach((dk) => {
-          dk.addEventListener('click', () => {
-            kategori.forEach((kat) => {
-              kat.innerHTML = dk.innerHTML;
-              this.listBook = dk.innerHTML;
-            });
-            k.nextElementSibling.classList.remove('muncul');
-          });
-        });
-      });
-    });
-    waktu.forEach((w) => {
-      w.addEventListener('click', () => {
-        w.nextElementSibling.classList.toggle('muncul');
-        kategori.forEach((k) => {
-          k.nextElementSibling.classList.remove('muncul');
-        });
-        const daftarWaktu = Array.from((w).nextElementSibling.children);
-        daftarWaktu.forEach((dw) => {
-          dw.addEventListener('click', () => {
-            waktu.forEach((wak) => {
-              wak.innerHTML = dw.innerHTML;
-            });
-            w.nextElementSibling.classList.remove('muncul');
-          });
-        });
-      });
-    });
-
-    const track = document.querySelector('.track');
-    const nextButton = document.querySelector('.next-btn');
-    const prevButton = document.querySelector('.prev-btn');
-    let urutan = 1;
-    const zoomIn = (currentSlide, targetSlide) => {
-      currentSlide.classList.remove('current__slide');
-      targetSlide.classList.add('current__slide');
-    };
-    nextButton.addEventListener('click', () => {
-      const currentSlide = track.querySelector('.current__slide');
-      const nextSlide = currentSlide.nextElementSibling;
-      const widthNextSlide = nextSlide.clientWidth;
-      zoomIn(currentSlide, nextSlide);
-      urutan++;
-      track.style.transform = `translateX(${-widthNextSlide * urutan}px)`;
-    });
-    prevButton.addEventListener('click', () => {
+    sortByCategory(sortBook) {
+      this.book.result = sortBook;
+    },
+    search(searchBook, inputSearch) {
+      this.counter = 1;
+      this.book.result = searchBook;
+      this.listBook = inputSearch;
+    },
+    showSideNav() {
+      document.querySelector('#profile-menu').classList.replace('hide-sidenav', 'show-sidenav');
+      document.querySelector('#dashboard').classList.add('menu-active');
+      document.querySelector('.burger a').classList.add('hidden-to-left');
+      document.querySelector('.nav.to-fixed').classList.add('nav-active');
+    },
+    hideSideNav() {
+      document.querySelector('#profile-menu').classList.replace('show-sidenav', 'hide-sidenav');
+      document.querySelector('#dashboard').classList.remove('menu-active');
+      document.querySelector('.burger a').classList.remove('hidden-to-left');
+      document.querySelector('.nav.to-fixed').classList.remove('nav-active');
+    },
+    prevButton() {
+      const track = document.querySelector('.track');
       const currentSlide = track.querySelector('.current__slide');
       const prevSlide = currentSlide.previousElementSibling;
+      if (prevSlide === null) return;
       const widthPrevSlide = prevSlide.clientWidth;
-      zoomIn(currentSlide, prevSlide);
-      urutan--;
-      track.style.transform = `translateX(${-widthPrevSlide * urutan}px)`;
+      this.counter--;
+      this.zoomIn(currentSlide, prevSlide);
+      track.style.transform = `translateX(${-widthPrevSlide * this.counter}px)`;
+    },
+    nextButton() {
+      const track = document.querySelector('.track');
+      const currentSlide = track.querySelector('.current__slide');
+      const nextSlide = currentSlide.nextElementSibling;
+      if (nextSlide === null) return;
+      const widthNextSlide = nextSlide.clientWidth;
+      this.counter++;
+      this.zoomIn(currentSlide, nextSlide);
+      track.style.transform = `translateX(${-widthNextSlide * this.counter}px)`;
+    },
+    zoomIn(currentSlide, targetSlide) {
+      currentSlide.classList.remove('current__slide');
+      targetSlide.classList.add('current__slide');
+    },
+  },
+  beforeCreate() {
+    if (!localStorage.token && this.$route.path !== '/login') {
+      this.$router.push('/login');
+    }
+  },
+  created() {
+    this.loadBook();
+  },
+  updated() {
+    const track = document.querySelector('.track');
+    if (track.childElementCount === 2) {
+      this.counter = 0;
+      track.children[0].classList.add('current__slide');
+    } else if (track.childElementCount > 2) {
+      track.children[1].classList.add('current__slide');
+      const slideWidth = track.children[1].clientWidth;
+      track.style.transform = `translateX(${-slideWidth}px)`;
+    } else {
+      track.children[track.childElementCount - 1].classList.add('current__slide');
+    }
+
+    if (this.listBook === '') this.listBook = 'List Book';
+  },
+  mounted() {
+    const category = document.querySelectorAll('.category-sort');
+    const time = document.querySelectorAll('.time-sort');
+
+    category.forEach((cat) => {
+      cat.addEventListener('click', () => {
+        cat.classList.toggle('arrow-up');
+        cat.nextElementSibling.classList.toggle('muncul');
+        time.forEach((ti) => {
+          ti.classList.remove('arrow-up');
+          ti.nextElementSibling.classList.remove('muncul');
+        });
+        const categoryList = Array.from(cat.nextElementSibling.children);
+        categoryList.forEach((cList) => {
+          cList.addEventListener('click', () => {
+            category.forEach((c) => {
+              c.innerHTML = cList.innerHTML;
+              this.listBook = cList.innerHTML;
+            });
+            cat.nextElementSibling.classList.remove('muncul');
+          });
+        });
+      });
+    });
+    time.forEach((ti) => {
+      ti.addEventListener('click', () => {
+        ti.classList.toggle('arrow-up');
+        ti.nextElementSibling.classList.toggle('muncul');
+        category.forEach((cat) => {
+          cat.classList.remove('arrow-up');
+          cat.nextElementSibling.classList.remove('muncul');
+        });
+        const timeList = Array.from((ti).nextElementSibling.children);
+        timeList.forEach((tList) => {
+          tList.addEventListener('click', () => {
+            time.forEach((t) => {
+              t.innerHTML = tList.innerHTML;
+            });
+            ti.nextElementSibling.classList.remove('muncul');
+          });
+        });
+      });
     });
   },
 };

@@ -8,23 +8,23 @@
         <div class="edit panggil-modal">Edit</div>
         <div class="delete modal-del">Delete</div>
       </div>
-      <img :src="dbBookDetail.result[0].img" alt="Sampul buku Dilan 1990">
+      <img :src="bookDetail.img" alt="Sampul buku Dilan 1990">
     </header>
     <div class="container">
       <div class="baris">
         <div class="kolom artikel">
           <div class="baris">
             <div class="kolom">
-              <div class="lencana">{{ dbBookDetail.result[0].name_category }}</div>
+              <div class="lencana">{{ bookDetail.name_category }}</div>
               <div class="judul-buku">
-                <h2>{{ dbBookDetail.result[0].title }}</h2>
+                <h2>{{ bookDetail.title }}</h2>
               </div>
               <div class="waktu">
                 <p>30 Juni 2019</p>
               </div>
             </div>
             <div class="kolom">
-              <div v-if="dbBookDetail.result[0].status === 1" >
+              <div v-if="bookDetail.status === 1" >
                 <p class="status">Available</p>
               </div>
               <div v-else >
@@ -33,12 +33,12 @@
             </div>
           </div>
           <div class="baris">
-            <p class="deskripsi">{{ dbBookDetail.result[0].description }}</p>
+            <p class="deskripsi">{{ bookDetail.description }}</p>
           </div>
         </div>
         <div class="kolom aksi">
           <div class="baris">
-            <img :src="dbBookDetail.result[0].img" alt="" class="sampul-buku">
+            <img :src="bookDetail.img" alt="" class="sampul-buku">
           </div>
           <div class="baris">
             <a href="#" class="btn-pinjam">Borrow</a>
@@ -95,22 +95,24 @@ export default {
   props: ['id'],
   data() {
     return {
-      dbBookDetail: {},
+      bookDetail: {},
     };
   },
-  updated() {
-    if (!localStorage.salt && this.$route.path !== '/login') {
+  methods: {
+    loadBookDetail() {
+      axios.get(`http://localhost:3333/api/v1/book/${this.id}`)
+        .then((res) => {
+          this.bookDetail = res.data.result;
+        });
+    },
+  },
+  beforeCreate() {
+    if (!localStorage.token && this.$route.path !== '/login') {
       this.$router.push('/login');
     }
   },
   created() {
-    axios.get(`http://localhost:3333/api/v1/book/${this.id}`)
-      .then((res) => {
-        this.dbBookDetail = res.data;
-      });
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+    this.loadBookDetail();
   },
 };
 </script>

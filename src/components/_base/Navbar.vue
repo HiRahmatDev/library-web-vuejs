@@ -1,22 +1,23 @@
 <template>
-  <nav class="nav to-fixed" :class="myClass.navAktif" >
+  <nav class="nav to-fixed" >
     <div class="navbar">
-      <div class="burger" @click="$emit('sendSwipe')" >
-        <a :class="myClass.hiddenToLeft">
+      <div class="burger">
+        <a @click="$emit('burgerClicked')" >
           <img src="@/assets/img/svg/burger.svg" alt="">
         </a>
       </div>
       <ul>
         <li>
-          <div class="kategori">All Categories</div>
+          <div class="category-sort">All Categories</div>
           <ul class="dropdown">
-            <li>All Categories</li>
-            <li :key="category.id"
-                v-for="category in api.category.result">{{ category.name_category }} </li>
+            <li @click="sort" >All Categories</li>
+            <li @click="sort" >Novel</li>
+            <li @click="sort" >Pendidikan</li>
+            <li @click="sort" >Filsafat</li>
           </ul>
         </li>
         <li>
-          <div class="waktu">All Time</div>
+          <div class="time-sort">All Time</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Last hour</li>
@@ -26,10 +27,11 @@
         </li>
       </ul>
     </div>
-    <form class="search">
+    <form @submit.prevent="$emit('enter')" class="search">
       <div class="grup-search">
         <button><img src="@/assets/img/magnifying-glass.png" alt=""></button>
-        <input type="search" placeholder="Search book">
+        <input v-model="inputSearch"
+        @input="search" type="text" placeholder="Search book, author, category">
       </div>
     </form>
     <router-link to="/" class="logo">
@@ -40,8 +42,40 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Navbar',
-  props: ['myClass', 'api'],
+  data() {
+    return {
+      inputSearch: null,
+    };
+  },
+  methods: {
+    sort(el) {
+      let sortBook = [];
+      if (el.target.innerHTML !== 'List Book' && el.target.innerHTML !== 'All Categories') {
+        axios.get(`http://localhost:3333/api/v1/book?search=${el.target.innerHTML.toLowerCase()}`)
+          .then((res) => {
+            sortBook = res.data.result;
+            this.$emit('sort-book', sortBook);
+          });
+      } else {
+        axios.get('http://localhost:3333/api/v1/book')
+          .then((res) => {
+            sortBook = res.data.result;
+            this.$emit('sort-book', sortBook);
+          });
+      }
+    },
+    search() {
+      let searchBook = [];
+      axios(`http://localhost:3333/api/v1/book?search=${this.inputSearch.toLowerCase()}`)
+        .then((res) => {
+          searchBook = res.data.result;
+          this.$emit('search-book', searchBook, this.inputSearch);
+        });
+    },
+  },
 };
 </script>

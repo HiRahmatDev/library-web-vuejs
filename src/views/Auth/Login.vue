@@ -11,14 +11,14 @@
         </a>
         <h1>Login</h1>
         <p>Welcome Back, Please Login<br>to Your Account</p>
-        <form @submit.prevent="login">
+        <form @submit="login">
           <div class="grup-input">
             <label for="email">Email Address</label>
-            <input v-model="email" v-on:keyup.enter="submit" type="email" id="email">
+            <input v-model="email" type="email" id="email">
           </div>
           <div class="grup-input">
             <label for="password">Password</label>
-            <input v-model="password" v-on:keyup.enter="submit" type="password" id="password">
+            <input v-model="password" type="password" id="password">
           </div>
           <div class="baris">
             <div class="grup-checkbox">
@@ -27,11 +27,14 @@
             </div>
             <a href="">Forgot Password</a>
           </div>
-          <div v-if="error !== false" class="flash-data">
+          <div v-if="code === 1" class="flash-data error">
+            <h2>{{ error }}</h2>
+          </div>
+          <div v-else-if="code === 2" class="flash-data warning">
             <h2>{{ error }}</h2>
           </div>
           <div class="grup-btn">
-            <button class="btn btn-auth-primary">Login</button>
+            <button type="submit" class="btn btn-auth-primary">Login</button>
             <router-link to="/register" class="btn btn-auth-secondary">Sign in</router-link>
           </div>
         </form>
@@ -57,15 +60,17 @@ export default {
       email: '',
       password: '',
       error: false,
+      code: '',
     };
   },
   methods: {
-    login() {
+    login(e) {
+      e.preventDefault();
+
       axios.post('http://localhost:3333/api/v1/user/login', {
         email: this.email, password: this.password,
       })
         .then((request) => {
-          // console.log(request);
           this.loginSuccess(request);
         });
     },
@@ -74,33 +79,36 @@ export default {
         this.loginFailed(req);
         return;
       }
-      if (req.data.result[0].status !== 1) {
-        this.needActivate();
+      if (req.data.result.status === 0) {
+        this.needActivate(req);
         return;
       }
-      localStorage.salt = req.data.result[0].salt;
-      localStorage.idUser = req.data.result[0].id;
+      localStorage.token = req.data.result.token;
       this.error = false;
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     },
     loginFailed(err) {
       this.error = err.data.err;
-      delete localStorage.salt;
-      delete localStorage.idUser;
+      this.code = 1;
+      delete localStorage.token;
     },
-    needActivate() {
-      this.error = 'Email is not Activated!';
-      delete localStorage.salt;
-      delete localStorage.idUser;
+    needActivate(req) {
+      const that = this;
+      axios.post('http://localhost:3333/api/v1/user/send', { name: req.data.result.fullname }, {
+        headers: { 'x-access-token': req.data.result.token },
+      })
+        .then((res) => {
+          setTimeout(() => {
+            console.log(res.data);
+            that.error = res.data.result.msg;
+            that.code = 2;
+            delete localStorage.token;
+          }, 5000);
+        });
     },
   },
-  created() {
-    if (localStorage.salt) {
-      this.$router.replace(this.$route.query.redirect || '/dashboard');
-    }
-  },
-  updated() {
-    if (localStorage.salt) {
+  beforeCreate() {
+    if (localStorage.token) {
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     }
   },
@@ -109,13 +117,19 @@ export default {
 
 <style lang="scss" scoped>
 .flash-data {
-  background-color: rgba(255, 0, 0, 0.651);
-  color:rgb(255, 255, 255);
   border-radius: 3px;
   h2 {
     // font-weight: 600;
     font-size: 18px;
     padding: 14px 18px;
   }
+}
+.error {
+  background-color: rgba(255, 0, 0, 0.651);
+  color:rgb(255, 255, 255);
+}
+.warning {
+  background-color: rgba(255, 182, 73, 0.87);
+  color:rgb(255, 255, 255);
 }
 </style>

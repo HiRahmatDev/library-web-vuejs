@@ -14,6 +14,14 @@ const routes = [
     },
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/Auth/Register.vue'),
+    meta: {
+      title: 'Register',
+    },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Auth/Login.vue'),
@@ -22,17 +30,15 @@ const routes = [
     },
   },
   {
+    path: '/user/confirm',
+    name: 'User Confirm',
+    component: () => import('@/views/Auth/Confirm.vue'),
+    props: true,
+  },
+  {
     path: '/logout',
     name: 'Logout',
     component: () => import('@/views/Auth/Logout.vue'),
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/views/Auth/Register.vue'),
-    meta: {
-      title: 'Register',
-    },
   },
   {
     path: '/dashboard',
@@ -53,11 +59,11 @@ const routes = [
   },
   {
     path: '/book/:id',
-    name: 'BookDetail',
+    name: 'Book Detail',
     props: true,
     component: () => import('@/views/Main/BookDetail.vue'),
     meta: {
-      title: 'Detail Book',
+      title: 'Book Detail',
     },
   },
 ];

@@ -1,6 +1,6 @@
 <template>
   <div class="carousel nav-fixed">
-    <button class="prev-btn">
+    <button @click="$emit('prevButton')" class="prev-btn">
       <img src="@/assets/img/left-arrow2.png" alt="">
     </button>
     <div class="carousel-wrap track">
@@ -15,7 +15,7 @@
         </div>
       </router-link>
     </div>
-    <button class="next-btn">
+    <button @click="$emit('nextButton')" class="next-btn">
       <img src="@/assets/img/left-arrow2.png" alt="">
     </button>
   </div>

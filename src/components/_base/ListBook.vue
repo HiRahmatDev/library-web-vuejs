@@ -1,6 +1,7 @@
 <template>
   <section class="list-book">
-    <h2>{{ judul }}</h2>
+    <h2 v-if="judul === 'All Categories' || judul === 'List Book'">{{ judul }}</h2>
+    <h2 v-else>Search "{{ judul }}"</h2>
     <div class="book baris">
       <div v-bind:key="book.id" v-for="book in dbBook" class="kolom">
         <Card v-bind:book="book" />

@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-modal" :class="myClass.modalActive" >
+  <div class="bg-modal">
     <div class="modal-content">
-      <button @click="$emit('closeModal')" class="close">
+      <button class="close">
         <img src="@/assets/img/close.png" alt="">
       </button>
       <div class="modal-container">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="baris">
-            <button @click="sendData" class="btn-modal">Save</button>
+            <button class="btn-modal">Save</button>
           </div>
         </form>
       </div>
@@ -62,7 +62,6 @@ import axios from 'axios';
 
 export default {
   name: 'ModalSidebar',
-  props: ['myClass'],
   data() {
     return {
       img: '',
@@ -84,7 +83,6 @@ export default {
       input.id_category = this.category;
       axios.post('http://localhost:3333/api/v1/book/insert', input)
         .then((res) => {
-          // console.log(res.data);
           if (res.status === 200) {
             self.$router.push('book/5');
           }

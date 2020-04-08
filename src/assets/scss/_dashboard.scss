@@ -16,6 +16,10 @@
   form.search {
     .grup-search {
       width: 406px;
+      button {
+        display: flex;
+        align-items: center;
+      }
     }
   }
   .logo {
@@ -35,18 +39,22 @@
     }
   }
 }
-#menu-profil .nav {
+#profile-menu .nav {
   position: relative;
   width: 100%;
   display: flex;
   box-shadow: none;
-  padding: 24px 0 0 3%;
+  padding: 24px 3%;
   justify-content: flex-end;
 }
 .burger a {
   cursor: pointer;
-  margin: 0 16px 0 0;
-  padding: 8px;
+  margin-right: 16px;
+  @include layar(hp) {
+    margin-left: 16px;
+  }
+  font-size: 45px;
+  line-height: 18px;
 }
 
 .navbar ul, .navbar, .search, .logo {
@@ -77,7 +85,7 @@
         content: "";
         height: 100%;
         width: 100%;
-        background-image: url('./assets/img/polygon-arrow.png');
+        background-image: url(./assets/img/arrow-down.png);
         background-repeat: no-repeat;
       }
     }
@@ -120,6 +128,18 @@
   }
   .dropdown.muncul {
     max-height: 140px;
+  }
+}
+
+div.arrow-up {
+  &::after {
+    margin: 5px 0 0 8px;
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-image: url(./assets/img/arrow-up.png)!important;
+    background-repeat: no-repeat;
   }
 }
 
@@ -284,10 +304,23 @@ button.prev-btn {
   margin: 0 20px;
 }
 
-#menu-profil {
+#profile-menu {
   position: fixed;
   top: 0;
   width: 25vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #dbdbdb;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
   @include layar(laptop) {
     width: 50vw;
   }
@@ -297,21 +330,6 @@ button.prev-btn {
   height: 100%;
   background-color: white;
   box-shadow: 4px 0 7px #0000003a;
-  @include layar(tablet) {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #dbdbdb;
-      border-radius: 10px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: transparent;
-      border-radius: 10px;
-    }
-  }
   z-index: 6;
   .container.center {
     display: flex;
@@ -378,7 +396,7 @@ button.prev-btn {
         content: "";
         height: 100%;
         width: 100%;
-        background-image: url('./assets/img/polygon-arrow.png');
+        background-image: url(./assets/img/arrow-down.png);
         background-repeat: no-repeat;
       }
     }
@@ -433,10 +451,10 @@ button.prev-btn {
     }
   }
 }
-.container-fluid, #menu-profil, .nav, .burger a {
+.container-fluid, #profile-menu, .nav, .burger a {
   transition: width ease .7s, margin ease .7s, left ease .7s, opacity ease-out .7s;
 }
-.menu-aktif {
+.menu-active {
   margin-left: 25%;
   width: 75%;
   @include layar(laptop) {
@@ -453,7 +471,7 @@ button.prev-btn {
   margin-top: -75px;
 }
 
-.to-fixed.nav-aktif {
+.to-fixed.nav-active {
   width: 75%;
   @include layar(laptop) {
     width: 80%;
@@ -465,10 +483,10 @@ button.prev-btn {
   }
 }
 
-.geser-kiri {
+.hide-sidenav {
   position: absolute;
   top: 0;
-  left: -26%;
+  left: -25.5%;
   @include layar(laptop) {
     left: -56%;
   }
@@ -476,7 +494,7 @@ button.prev-btn {
     left: -95%;
   }
 }
-.geser-kanan {
+.show-sidenav {
   position: absolute;
   top: 0;
   left: 0;

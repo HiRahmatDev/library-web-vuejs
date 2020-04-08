@@ -1,9 +1,12 @@
+<template>
+  <div></div>
+</template>
+
 <script>
 export default {
   name: 'Logout',
-  created() {
-    delete localStorage.salt;
-    delete localStorage.idUser;
+  mounted() {
+    delete localStorage.token;
     this.$router.push('/login');
   },
 };

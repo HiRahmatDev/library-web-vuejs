@@ -68,7 +68,6 @@ export default {
         password: this.password,
       })
         .then(() => {
-          // console.log(request);
           this.registerSuccess();
         })
         .catch(() => {
