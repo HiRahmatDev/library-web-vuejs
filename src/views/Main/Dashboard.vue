@@ -8,7 +8,8 @@
     <Navside v-on:burgerClicked="hideSideNav"
              v-on:search-book="search"
              v-on:enter="hideSideNav"
-             v-on:sort-book="sortByCategory"/>
+             v-on:sort-book="sortByCategory"
+             v-on:show-modal="showModal" />
     <div v-if="listBook == 'List Book' || listBook == 'All Categories'"  >
       <Carousel v-on:prevButton="prevButton"
                 v-on:nextButton="nextButton"
@@ -20,7 +21,7 @@
     <ListBook :dbBook="book.result"
               :judul="listBook"
     />
-    <ModalSidebar/>
+    <ModalSidebar v-on:close-modal="closeModal" />
   </div>
 </template>
 
@@ -104,6 +105,12 @@ export default {
       currentSlide.classList.remove('current__slide');
       targetSlide.classList.add('current__slide');
     },
+    showModal() {
+      document.querySelector('.bg-modal').classList.add('modal-active');
+    },
+    closeModal() {
+      document.querySelector('.bg-modal').classList.remove('modal-active');
+    },
   },
   beforeCreate() {
     if (!localStorage.token && this.$route.path !== '/login') {
@@ -144,6 +151,7 @@ export default {
         categoryList.forEach((cList) => {
           cList.addEventListener('click', () => {
             category.forEach((c) => {
+              c.classList.remove('arrow-up');
               c.innerHTML = cList.innerHTML;
               this.listBook = cList.innerHTML;
             });
@@ -164,6 +172,7 @@ export default {
         timeList.forEach((tList) => {
           tList.addEventListener('click', () => {
             time.forEach((t) => {
+              t.classList.remove('arrow-up');
               t.innerHTML = tList.innerHTML;
             });
             ti.nextElementSibling.classList.remove('muncul');
