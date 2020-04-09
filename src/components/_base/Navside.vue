@@ -26,9 +26,10 @@
           <div class="category-sort">All Categories</div>
           <ul class="dropdown">
             <li @click="sort" >All Categories</li>
-            <li @click="sort" >Novel</li>
+            <li v-for="c in category" :key="c.id" @click="sort" >{{ c.name_category }}</li>
+            <!-- <li @click="sort" >Novel</li>
             <li @click="sort" >Pendidikan</li>
-            <li @click="sort" >Filsafat</li>
+            <li @click="sort" >Filsafat</li> -->
           </ul>
         </li>
         <li>
@@ -43,7 +44,7 @@
         </li>
         <li><router-link to="book"><p>Explore</p></router-link></li>
         <li><router-link to="book/history"><p>History</p></router-link></li>
-        <li><a class="panggil-modal"><p>Add Book*</p></a></li>
+        <li><a @click="$emit('show-modal')"><p>Add Book*</p></a></li>
         <li><router-link to="/logout"><p>Log Out</p></router-link></li>
       </ul>
     </div>
@@ -60,6 +61,7 @@ export default {
     return {
       user: {},
       inputSearch: null,
+      category: null,
     };
   },
   methods: {
@@ -95,9 +97,17 @@ export default {
           this.$emit('search-book', searchBook, this.inputSearch);
         });
     },
+    loadCategory() {
+      const that = this;
+      axios.get('http://localhost:3333/api/v1/category')
+        .then((res) => {
+          that.category = res.data.result;
+        });
+    },
   },
   created() {
     this.loadUser();
+    this.loadCategory();
   },
 };
 </script>

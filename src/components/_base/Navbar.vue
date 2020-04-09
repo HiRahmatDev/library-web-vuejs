@@ -11,9 +11,10 @@
           <div class="category-sort">All Categories</div>
           <ul class="dropdown">
             <li @click="sort" >All Categories</li>
-            <li @click="sort" >Novel</li>
-            <li @click="sort" >Pendidikan</li>
-            <li @click="sort" >Filsafat</li>
+            <li v-for="c in category" :key="c.id" @click="sort" >{{ c.name_category }}</li>
+            <!-- <li @click="sort" >Novel</li> -->
+            <!-- <li @click="sort" >Pendidikan</li>
+            <li @click="sort" >Filsafat</li> -->
           </ul>
         </li>
         <li>
@@ -49,6 +50,7 @@ export default {
   data() {
     return {
       inputSearch: null,
+      category: null,
     };
   },
   methods: {
@@ -76,6 +78,16 @@ export default {
           this.$emit('search-book', searchBook, this.inputSearch);
         });
     },
+    loadCategory() {
+      const that = this;
+      axios.get('http://localhost:3333/api/v1/category')
+        .then((res) => {
+          that.category = res.data.result;
+        });
+    },
+  },
+  created() {
+    this.loadCategory();
   },
 };
 </script>

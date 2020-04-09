@@ -99,36 +99,39 @@ body, input {
     transform: scale(.6);
     position: relative;
     width: 80%;
+    height: 120%;
+    box-sizing: border-box;
     @include layar(tablet) {
-      // width: 95%;
-      transform: scale(.8);
+      width: 95%;
       // height: 97%;
+      transform: scale(.8);
     }
     @include layar(hp) {
       width: 95%;
+      height: 97%;
       transform: scale(.8);
-      // height: 97%;
     }
     background-color: white;
     border-radius: 15px;
-    overflow: hidden;
     transition: transform ease .2s;
-    .close {
-      border: none;
-      background-color: transparent;
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      cursor: pointer;
-      padding: 2px 4px;
-      img {
-        width: 24px;
-      }
-    }
-    .modal-container {
-      margin: 34px 42px;
+    .modal-header {
+      height: 120px;
+      background-color: white;
+      margin: 34px 0 0 42px;
       @include layar(hp) {
-        margin: 20px 20px;
+        margin: 20px 0 0 20px;
+      }
+      .close {
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        cursor: pointer;
+        padding: 2px 4px;
+        img {
+          width: 24px;
+        }
       }
       h2 {
         font-size: 40px;
@@ -138,16 +141,35 @@ body, input {
           font-size: 30px;
         }
       }
+    }
+    .modal-container {
+      margin: 34px 0 34px 42px;
+      height: 80%;
+      box-sizing: border-box;
+      @include layar(hp) {
+        margin: 20px 0 20px 20px;
+      }
       form {
+        margin-top: -50px;
+        padding-right: 42px;
+        height: 100%;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #dbdbdb;
+          border-radius: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+          border-radius: 10px;
+        }
         .baris {
-          &:first-child {
-            margin-top: 80px;
-          }
-          margin-top: 38px;
+          margin: 30px 0;
           @include layar(hp) {
-            margin-top: 20px;
+            margin: 20px 0;
           }
-
           .kolom-3 {
             width: 25%;
             display: flex;
@@ -180,6 +202,7 @@ body, input {
         input, textarea {
           resize: none;
           box-sizing: border-box;
+          font-family: 'Airbnb Cereal App';
           font-size: 30px;
           font-weight: 500;
           color: #C8BABA;
