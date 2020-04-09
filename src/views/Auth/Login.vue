@@ -27,10 +27,16 @@
             </div>
             <a href="">Forgot Password</a>
           </div>
-          <div v-if="code === 1" class="flash-data error">
+          <div v-if="code === 0" class="flash-data load">
+            <h2>{{ error }}</h2>
+          </div>
+          <div v-else-if="code === 1" class="flash-data success">
             <h2>{{ error }}</h2>
           </div>
           <div v-else-if="code === 2" class="flash-data warning">
+            <h2>{{ error }}</h2>
+          </div>
+          <div v-else-if="code === 3" class="flash-data error">
             <h2>{{ error }}</h2>
           </div>
           <div class="grup-btn">
@@ -66,7 +72,8 @@ export default {
   methods: {
     login(e) {
       e.preventDefault();
-
+      this.code = 0;
+      this.error = 'please wait...';
       axios.post('http://localhost:3333/api/v1/user/login', {
         email: this.email, password: this.password,
       })
@@ -84,26 +91,26 @@ export default {
         return;
       }
       localStorage.token = req.data.result.token;
-      this.error = false;
+      this.code = 1;
+      this.error = 'Login Success!';
       this.$router.replace(this.$route.query.redirect || '/dashboard');
     },
     loginFailed(err) {
       this.error = err.data.err;
-      this.code = 1;
+      this.code = 3;
       delete localStorage.token;
     },
     needActivate(req) {
       const that = this;
+      this.code = 0;
+      this.error = 'please wait...';
       axios.post('http://localhost:3333/api/v1/user/send', { name: req.data.result.fullname }, {
         headers: { 'x-access-token': req.data.result.token },
       })
         .then((res) => {
-          setTimeout(() => {
-            console.log(res.data);
-            that.error = res.data.result.msg;
-            that.code = 2;
-            delete localStorage.token;
-          }, 5000);
+          that.error = res.data.result.msg;
+          that.code = 2;
+          delete localStorage.token;
         });
     },
   },
@@ -124,12 +131,20 @@ export default {
     padding: 14px 18px;
   }
 }
-.error {
-  background-color: rgba(255, 0, 0, 0.651);
+.load {
+  background-color: #979797;
+  color:rgb(255, 255, 255);
+}
+.success {
+  background-color: #40d158;
   color:rgb(255, 255, 255);
 }
 .warning {
-  background-color: rgba(255, 182, 73, 0.87);
+  background-color: #f5b14b;
+  color:rgb(255, 255, 255);
+}
+.error {
+  background-color: #d33030;
   color:rgb(255, 255, 255);
 }
 </style>

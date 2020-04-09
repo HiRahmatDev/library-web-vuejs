@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/_font-face.scss';
+// @import '@/assets/scss/_font-face.scss';
 
 * {
   font-family: 'Airbnb Cereal App', Arial, Helvetica, sans-serif;

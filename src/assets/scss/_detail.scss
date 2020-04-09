@@ -84,6 +84,7 @@ header.container-fluid {
     }
     .kolom {
       &:first-child {
+        width: auto;
         @include layar(tablet) {
           width: 40%
         }
@@ -117,14 +118,17 @@ header.container-fluid {
     }
   }
   .lencana {
+    display: flex;
     margin-top: 12px;
-    max-width: 90px;
-    padding: 6px 0;
-    font-size: $psize;
-    text-align: center;
-    background-color: $penting;
-    color: white;
-    border-radius: 15px;
+    p {
+      padding: 6px 18px;
+      font-size: $psize;
+      font-weight: 600;
+      text-align: center;
+      background-color: $penting;
+      color: white;
+      border-radius: 15px;
+    }
   }
   
   .judul-buku {

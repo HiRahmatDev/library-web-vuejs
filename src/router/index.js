@@ -58,6 +58,15 @@ const routes = [
     },
   },
   {
+    path: '/book/history',
+    name: 'History',
+    props: true,
+    component: () => import('@/views/Main/History.vue'),
+    meta: {
+      title: 'History',
+    },
+  },
+  {
     path: '/book/:id',
     name: 'Book Detail',
     props: true,

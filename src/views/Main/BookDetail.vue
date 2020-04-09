@@ -15,12 +15,14 @@
         <div class="kolom artikel">
           <div class="baris">
             <div class="kolom">
-              <div class="lencana">{{ bookDetail.name_category }}</div>
+              <div class="lencana">
+                <p>{{ bookDetail.name_category }}</p>
+              </div>
               <div class="judul-buku">
                 <h2>{{ bookDetail.title }}</h2>
               </div>
               <div class="waktu">
-                <p>30 Juni 2019</p>
+                <p>{{ bookDetail.created_at }}</p>
               </div>
             </div>
             <div class="kolom">
