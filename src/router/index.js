@@ -69,7 +69,7 @@ const routes = [
   {
     path: '/book/:id',
     name: 'Book Detail',
-    props: true,
+    // props: true,
     component: () => import('@/views/Main/BookDetail.vue'),
     meta: {
       title: 'Book Detail',

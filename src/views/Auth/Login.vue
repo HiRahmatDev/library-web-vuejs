@@ -27,16 +27,16 @@
             </div>
             <a href="">Forgot Password</a>
           </div>
-          <div v-if="code === 0" class="flash-data load">
+          <div v-if="code === 0" class="flash-alert load">
             <h2>{{ error }}</h2>
           </div>
-          <div v-else-if="code === 1" class="flash-data success">
+          <div v-else-if="code === 1" class="flash-alert success">
             <h2>{{ error }}</h2>
           </div>
-          <div v-else-if="code === 2" class="flash-data warning">
+          <div v-else-if="code === 2" class="flash-alert warning">
             <h2>{{ error }}</h2>
           </div>
-          <div v-else-if="code === 3" class="flash-data error">
+          <div v-else-if="code === 3" class="flash-alert error">
             <h2>{{ error }}</h2>
           </div>
           <div class="grup-btn">
@@ -123,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.flash-data {
+.flash-alert {
   border-radius: 3px;
   h2 {
     // font-weight: 600;

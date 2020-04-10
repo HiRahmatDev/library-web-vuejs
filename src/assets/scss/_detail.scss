@@ -40,6 +40,7 @@ header.container-fluid {
   }
 
   .grup-edit {
+    font-weight: 500;
     position: absolute;
     top: 20px;
     right: 36px;
@@ -185,7 +186,6 @@ header.container-fluid {
   }
 }
 .btn-pinjam {
-  margin-right: 14px;
   @include layar(tablet) {
     box-sizing: border-box;
     margin-right: 0;
@@ -197,23 +197,30 @@ header.container-fluid {
     width: auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.13);
   }
+  margin-right: 14px;
   margin-top: 180px;
   color: white;
   background-color: $penting;
   font-size: 30px;
+  font-weight: bold;
   width: 220px;
   text-align: center;
   padding: 18px 0;
   border-radius: 10px;
   transition: ease .2s;
+  outline: none;
+  border: none;
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.13);
+    transform: translateY(-5px);
+    box-shadow: 0 25px 20px -25px #FBCC38;
     background-color: $pentingLighter;
   }
   &:active {
     transform: translateY(2px);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.13);
+    outline: none;
+    border: none;
+    box-shadow: 0 20px 20px -25px #FBCC38;
   }
 }
 /* 

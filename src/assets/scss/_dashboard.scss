@@ -207,31 +207,35 @@ form.search {
 
   button {
     position: absolute;
+    font-family: 'Airbnb Cereal App', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 35px;
+    text-align: center;
     border: none;
     background-color: white;
     width: 60px;
     height: 60px;
     border-radius: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.20);
     cursor: pointer;
     z-index: 1;
-    transition: ease .2s;
+    transition: ease .1s;
     &:focus {
       border: none;
       outline: none;
     }
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 6px rgba(0, 0, 0, 0.13);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.20);
     }
     &:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.13);
+      box-shadow: 0 0px 6px rgba(0, 0, 0, 0.20);
     }
-    img {
-      margin-top: 3px;
-      margin-right: 2px;
-    }
+    // img {
+    //   margin-top: 3px;
+    //   margin-right: 2px;
+    // }
   }
 }
 
@@ -292,9 +296,9 @@ form.search {
 }
 button.next-btn {
   right: 4%;
-  img {
-    transform: rotate(180deg)
-  }
+  // img {
+  //   transform: rotate(180deg)
+  // }
 }
 button.prev-btn {
   left: 4%;
@@ -452,7 +456,7 @@ button.prev-btn {
   }
 }
 .container-fluid, #profile-menu, .nav, .burger a {
-  transition: width ease .7s, margin ease .7s, left ease .7s, opacity ease-out .7s;
+  transition: width ease .6s, margin ease .6s, left ease .6s, opacity ease-out .6s;
 }
 .menu-active {
   margin-left: 25%;

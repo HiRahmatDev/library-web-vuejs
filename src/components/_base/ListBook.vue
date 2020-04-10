@@ -3,14 +3,42 @@
     <h2 v-if="judul === 'All Categories' || judul === 'List Book'">{{ judul }}</h2>
     <h2 v-else>Search "{{ judul }}"</h2>
     <div class="book baris">
-      <div v-bind:key="book.id" v-for="book in dbBook" class="kolom">
+      <div v-bind:key="book.id" v-for="book in book.result" class="kolom">
         <Card v-bind:book="book" />
       </div>
+    </div>
+    <div class="pagination">
+      <button v-if="book.prevLink === null"
+              class="disabled"
+              @click="$emit('prev-page')" >
+      <span>&laquo;</span> Prev
+      </button>
+      <button v-else
+              @click="$emit('prev-page')" >
+      <span>&laquo;</span> Prev
+      </button>
+      <ul class="page">
+        <div v-for="page in book.pages" :key="page" >
+          <li v-if="page !== book.page" class="disabled">{{ page }}</li>
+          <li v-else>{{ page }}</li>
+        </div>
+      </ul>
+      <button v-if="book.nextLink === null"
+              class="disabled"
+              @click="$emit('next-page')"
+      >
+      Next <span>&raquo;</span>
+      </button>
+      <button v-else
+              @click="$emit('next-page')" >
+      Next <span>&raquo;</span>
+      </button>
     </div>
   </section>
 </template>
 
 <script>
+/* eslint-disable no-plusplus */
 import Card from '@/components/_module/Card.vue';
 
 export default {
@@ -18,7 +46,7 @@ export default {
   components: {
     Card,
   },
-  props: ['dbBook', 'judul'],
+  props: ['book', 'judul'],
 };
 </script>
 
@@ -58,9 +86,18 @@ section.list-book {
     a {
       width: 320px;
       height: 340px;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.25);
       border-radius: 15px;
       overflow: hidden;
+      transition: box-shadow ease .4s, transform ease .2s;
+      &:hover {
+        box-shadow: 0 30px 35px -25px rgba(0, 0, 0, 0.25);
+        transform: translateY(-4px);
+      }
+      &:active {
+        box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.25);
+        transform: translateY(2px);
+      }
       &:hover .card .container-thumb img{
         transform: scale(1.07);
       }
@@ -80,7 +117,7 @@ section.list-book {
             width: 100%;
             object-fit: cover;
             transform: scale(1.005);
-            transition: transform ease .5s;
+            transition: transform ease .4s;
           }
         }
         h3 {
@@ -109,6 +146,91 @@ section.list-book {
           font-weight: 300;
           text-align: center;
         }
+      }
+    }
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  button {
+    font-family: 'Airbnb Cereal App', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: solid 1px rgba(0, 0, 0, 0.11);
+    background-color: white;
+    padding: 10px 19px;
+    border-radius: 50px;
+    transition: ease .1s;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.11);
+    }
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 0px 4px rgba(0, 0, 0, 0.11);
+    }
+    span {
+      font-size: 20px;
+      line-height: 0;
+      transition: ease .2s;
+    }
+    &:first-child {
+      &:hover span {
+        margin-right: 6px;
+      }
+    }
+    &:last-child {
+      &:hover span {
+        margin-left: 6px;
+      }
+    }
+  }
+  button.disabled {
+    border: solid 1px rgba(0, 0, 0, 0.11);
+    color: rgba(3, 3, 3, 0.11);
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      transform: translateY(0px);
+      box-shadow: none;
+    }
+    &:active {
+      transform: translateY(0px);
+      box-shadow: none;
+    }
+    &:first-child {
+      &:hover span {
+        margin-right: 0px;
+      }
+    }
+    &:last-child {
+      &:hover span {
+        margin-left: 0px;
+      }
+    }
+  }
+  ul.page {
+    font-family: 'Airbnb Cereal App', Arial, Helvetica, sans-serif;
+    display: flex;
+    div {
+      margin: 0 12.5px;
+      cursor: pointer;
+      &:first-child {
+        margin-left: 20px;
+      }
+      &:last-child {
+        margin-right: 20px;
+      }
+      .disabled {
+        color: rgba(0, 0, 0, 0.226);
       }
     }
   }

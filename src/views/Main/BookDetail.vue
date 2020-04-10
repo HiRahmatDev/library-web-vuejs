@@ -43,17 +43,17 @@
             <img :src="bookDetail.img" alt="" class="sampul-buku">
           </div>
           <div class="baris">
-            <a href="#" class="btn-pinjam">Borrow</a>
+            <button class="btn-pinjam">Borrow</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- Modal Edit
-    <div class="bg-modal">
+    <!-- Modal Edit -->
+    <div class="bg-modal modal-active">
       <div class="modal-content">
         <button class="close"><img src="@/assets/img/close.png" alt=""></button>
         <div class="modal-container">
-          <h2>Edit Data</h2>
+          <h2>Edit Book</h2>
           <form>
             <div class="baris">
               <div class="kolom-3">
@@ -85,7 +85,8 @@
           </form>
         </div>
       </div>
-    </div> -->
+    </div>
+    <!-- End Modal -->
   </div>
 </template>
 
@@ -94,7 +95,7 @@ import axios from 'axios';
 
 export default {
   name: 'BookDetail',
-  props: ['id'],
+  // props: ['id'],
   data() {
     return {
       bookDetail: {},
@@ -102,7 +103,7 @@ export default {
   },
   methods: {
     loadBookDetail() {
-      axios.get(`http://localhost:3333/api/v1/book/${this.id}`)
+      axios.get(`http://localhost:3333/api/v1/book/${this.$route.params.id}`)
         .then((res) => {
           this.bookDetail = res.data.result;
         });

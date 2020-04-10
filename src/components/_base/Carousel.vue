@@ -1,7 +1,7 @@
 <template>
   <div class="carousel nav-fixed">
     <button @click="$emit('prevButton')" class="prev-btn">
-      <img src="@/assets/img/left-arrow2.png" alt="">
+      &#8249;
     </button>
     <div class="carousel-wrap track">
       <router-link :to="'/book/' + book.id" v-for="book in dbBook"
@@ -16,7 +16,7 @@
       </router-link>
     </div>
     <button @click="$emit('nextButton')" class="next-btn">
-      <img src="@/assets/img/left-arrow2.png" alt="">
+      &#8250;
     </button>
   </div>
 </template>

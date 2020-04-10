@@ -1,27 +1,30 @@
 <template>
   <div class="container-fluid" id="dashboard">
-    <Navbar v-on:burgerClicked="showSideNav"
-            v-on:sort-book="sortByCategory"
-            v-on:search-book="search"
-            v-on:enter="hideSideNav"
-            v-on:sortClicked="dDown()" />
-    <Navside v-on:burgerClicked="hideSideNav"
-             v-on:search-book="search"
-             v-on:enter="hideSideNav"
-             v-on:sort-book="sortByCategory"
-             v-on:show-modal="showModal" />
+    <Navbar @burgerClicked="showSideNav"
+            @sort-book="sortByCategory"
+            @search-book="search"
+            @enter="hideSideNav"
+            @sortClicked="dDown()" />
+    <Navside @burgerClicked="hideSideNav"
+             @search-book="search"
+             @enter="hideSideNav"
+             @sort-book="sortByCategory"
+             @show-modal="showModal" />
     <div v-if="listBook == 'List Book' || listBook == 'All Categories'"  >
-      <Carousel v-on:prevButton="prevButton"
-                v-on:nextButton="nextButton"
+      <Carousel @prevButton="prevButton"
+                @nextButton="nextButton"
                 :dbBook="book.result" />
     </div>
     <div v-else  >
       <Carousel class="collapse" :dbBook="book.result" />
     </div>
-    <ListBook :dbBook="book.result"
+    <ListBook :book="book"
               :judul="listBook"
+              @prev-page="prevPage"
+              @next-page="nextPage"
     />
-    <ModalSidebar v-on:close-modal="closeModal" />
+    <ModalSidebar @close-modal="closeModal" />
+    <Footer/>
   </div>
 </template>
 
@@ -34,6 +37,7 @@ import Navside from '@/components/_base/Navside.vue';
 import Carousel from '@/components/_base/Carousel.vue';
 import ListBook from '@/components/_base/ListBook.vue';
 import ModalSidebar from '@/components/_base/ModalSidebar.vue';
+import Footer from '@/components/_base/Footer.vue';
 
 export default {
   name: 'Dashboard',
@@ -43,6 +47,7 @@ export default {
     Carousel,
     ListBook,
     ModalSidebar,
+    Footer,
   },
   data() {
     return {
@@ -58,6 +63,24 @@ export default {
         .then((res) => {
           that.book = res.data;
         });
+    },
+    nextPage() {
+      const that = this;
+      if (this.book.nextLink) {
+        axios.get(this.book.nextLink)
+          .then((res) => {
+            that.book = res.data;
+          });
+      }
+    },
+    prevPage() {
+      const that = this;
+      if (this.book.prevLink) {
+        axios.get(this.book.prevLink)
+          .then((res) => {
+            that.book = res.data;
+          });
+      }
     },
     dDown() {
     },
