@@ -14,7 +14,7 @@ export default {
     };
   },
   created() {
-    axios.get(`http://localhost:3333/api/v1/user/confirm?key=${this.$route.query.key}`)
+    axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/confirm?key=${this.$route.query.key}`)
       .then((res) => {
         // console.log(res.headers);
         this.message = res.data.err;

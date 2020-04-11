@@ -59,7 +59,7 @@ export default {
   methods: {
     loadBook() {
       const that = this;
-      axios.get('http://localhost:3333/api/v1/book')
+      axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book`)
         .then((res) => {
           that.book = res.data;
         });

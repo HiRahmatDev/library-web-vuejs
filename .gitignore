@@ -4,6 +4,7 @@ node_modules
 vendor/library-website
 
 # local env files
+.env
 .env.local
 .env.*.local
 

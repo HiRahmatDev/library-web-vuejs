@@ -49,7 +49,7 @@
       </div>
     </div>
     <!-- Modal Edit -->
-    <div class="bg-modal modal-active">
+    <div class="bg-modal">
       <div class="modal-content">
         <button class="close"><img src="@/assets/img/close.png" alt=""></button>
         <div class="modal-container">
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     loadBookDetail() {
-      axios.get(`http://localhost:3333/api/v1/book/${this.$route.params.id}`)
+      axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book/${this.$route.params.id}`)
         .then((res) => {
           this.bookDetail = res.data.result;
         });

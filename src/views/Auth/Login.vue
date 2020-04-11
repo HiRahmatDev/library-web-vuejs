@@ -59,6 +59,7 @@
 <script>
 import axios from 'axios';
 
+
 export default {
   name: 'Login',
   data() {
@@ -74,7 +75,7 @@ export default {
       e.preventDefault();
       this.code = 0;
       this.error = 'please wait...';
-      axios.post('http://localhost:3333/api/v1/user/login', {
+      axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/login`, {
         email: this.email, password: this.password,
       })
         .then((request) => {
@@ -104,7 +105,7 @@ export default {
       const that = this;
       this.code = 0;
       this.error = 'please wait...';
-      axios.post('http://localhost:3333/api/v1/user/send', { name: req.data.result.fullname }, {
+      axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/send`, { name: req.data.result.fullname }, {
         headers: { 'x-access-token': req.data.result.token },
       })
         .then((res) => {

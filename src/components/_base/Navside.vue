@@ -68,7 +68,7 @@ export default {
     loadUser() {
       const token = jwt.verify(localStorage.token, 'libraryku');
       const that = this;
-      axios.get(`http://localhost:3333/api/v1/user/${token.id}`)
+      axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/${token.id}`)
         .then((res) => {
           that.user = res.data.result;
         });
@@ -76,13 +76,13 @@ export default {
     sort(el) {
       let sortBook = [];
       if (el.target.innerHTML !== 'List Book' && el.target.innerHTML !== 'All Categories') {
-        axios.get(`http://localhost:3333/api/v1/book?search=${el.target.innerHTML.toLowerCase()}`)
+        axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book?search=${el.target.innerHTML.toLowerCase()}`)
           .then((res) => {
             sortBook = res.data.result;
             this.$emit('sort-book', sortBook);
           });
       } else {
-        axios.get('http://localhost:3333/api/v1/book')
+        axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book`)
           .then((res) => {
             sortBook = res.data.result;
             this.$emit('sort-book', sortBook);
@@ -91,7 +91,7 @@ export default {
     },
     search() {
       let searchBook = [];
-      axios(`http://localhost:3333/api/v1/book?search=${this.inputSearch.toLowerCase()}`)
+      axios(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book?search=${this.inputSearch.toLowerCase()}`)
         .then((res) => {
           searchBook = res.data.result;
           this.$emit('search-book', searchBook, this.inputSearch);
@@ -99,7 +99,7 @@ export default {
     },
     loadCategory() {
       const that = this;
-      axios.get('http://localhost:3333/api/v1/category')
+      axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/category`)
         .then((res) => {
           that.category = res.data.result;
         });

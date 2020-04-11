@@ -87,7 +87,7 @@ export default {
       formData.append('author', this.author);
       formData.append('img', this.$refs.file.files[0]);
       formData.append('id_category', this.category);
-      axios.post('http://localhost:3333/api/v1/book/insert', formData)
+      axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book/insert`, formData)
         .then((res) => {
           if (res.status === 200) {
             that.$router.push(`book/${res.data.result.insertId}`);
