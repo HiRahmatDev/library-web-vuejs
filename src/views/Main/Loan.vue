@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" id="history">
+  <div class="container-fluid" id="loan">
     <Navbar :namePage="namePage"
             @burgerClicked="showSideNav"
             @enter="hideSideNav"/>
@@ -10,19 +10,24 @@
       <router-link class="btn btn-table" to="/book/history">History</router-link>
       <table id="table-history">
         <col width="20">
-        <col >
-        <col width="10%">
+        <col>
+        <col width="5%">
+        <col width="5%">
         <col width="20%">
         <tr>
           <th>#</th>
           <th>Books</th>
-          <th class="text-center" >Fines Paid</th>
-          <th>Date Return</th>
+          <th class="text-center">Forfeit</th>
+          <th class="text-center">Action</th>
+          <th>Deadline</th>
         </tr>
         <tr v-for="(data, i) in loanList" :key="data.id">
           <td>{{ i + 1 }}</td>
           <td><div class="book-name"><img :src="data.img"><p>{{ data.title }}</p></div></td>
-          <td class="text-center" >{{ data.forfeit }}</td>
+          <td class="text-center">{{ data.forfeit }}</td>
+          <td class="text-center">
+            <span @click="returnBook(data.id)">Return</span>
+          </td>
           <td>{{ data.deadline }}</td>
         </tr>
       </table>
@@ -47,15 +52,32 @@ export default {
       namePage: '',
     };
   },
+  computed: {
+  },
   methods: {
     loadHistory() {
       const token = jwt.verify(localStorage.token, process.env.VUE_APP_SECRET_KEY);
       Axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book/loan`)
         .then((res) => {
           const data = res.data.result;
-          const dataBaseOnUser = data.filter((d) => d.id_user === token.id && d.status_loan === 0);
+          const dataBaseOnUser = data.filter((d) => d.id_user === token.id && d.status_loan === 1);
           this.loanList = dataBaseOnUser;
         });
+    },
+    returnBook(id) {
+      const that = this;
+      this.$swal({
+        title: 'Return Now?',
+        text: 'Are you sure want to return this book?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#FBCC38',
+        confirmButtonText: 'Yes',
+      }).then((result) => {
+        if (result.value) {
+          that.$router.push(`/book/return/${id}`);
+        }
+      });
     },
     getNamePage() {
       const idName = document.querySelector('.container-fluid').id;
@@ -104,6 +126,13 @@ table {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.151);
   border-radius: 10px;
   overflow: hidden;
+  span {
+    background-color: rgb(255, 196, 86);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
 }
 table, tr, th, td {
   align-content: center;
@@ -143,12 +172,5 @@ tr {
   p {
     margin-left: 20px;
   }
-}
-span {
-  background-color: rgb(255, 196, 86);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
 }
 </style>

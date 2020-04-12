@@ -58,13 +58,25 @@ const routes = [
     },
   },
   {
+    path: '/book/loan',
+    name: 'Loan List',
+    component: () => import('@/views/Main/Loan.vue'),
+    meta: {
+      title: 'Loan List',
+    },
+  },
+  {
     path: '/book/history',
     name: 'History',
-    props: true,
     component: () => import('@/views/Main/History.vue'),
     meta: {
       title: 'History',
     },
+  },
+  {
+    path: '/book/return/:id',
+    name: 'Return Book',
+    component: () => import('@/views/Main/ReturnBook.vue'),
   },
   {
     path: '/book/:id',
