@@ -58,6 +58,14 @@ const routes = [
     },
   },
   {
+    path: '/book/loan/:user/:book',
+    name: 'Loan Book',
+    component: () => import('@/views/Main/LoanBook.vue'),
+    meta: {
+      title: 'Loan Book',
+    },
+  },
+  {
     path: '/book/loan',
     name: 'Loan List',
     component: () => import('@/views/Main/Loan.vue'),

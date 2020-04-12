@@ -141,6 +141,7 @@ export default {
         });
     },
     borrow() {
+      const that = this;
       if (this.bookDetail.status === 0) {
         this.$swal({
           title: 'Borrow Failed!',
@@ -159,16 +160,7 @@ export default {
         confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.value) {
-          this.$swal({
-            title: 'Book Borrowed',
-            text: `${this.bookDetail.title} has been borrowed!`,
-            icon: 'success',
-            confirmButtonColor: '#FBCC38',
-          });
-          Axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book/loan?user=${this.getIdUser()}&book=${this.bookDetail.id}`)
-            .then((res) => {
-              this.$router.push('/book/loan');
-            });
+          that.$router.push(`/book/loan/${this.getIdUser()}/${this.bookDetail.id}`);
         }
       });
     },

@@ -65,7 +65,6 @@ export default {
         });
     },
     returnBook(id) {
-      const that = this;
       this.$swal({
         title: 'Return Now?',
         text: 'Are you sure want to return this book?',
@@ -75,7 +74,7 @@ export default {
         confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.value) {
-          that.$router.push(`/book/return/${id}`);
+          this.$router.push(`/book/return/${id}`);
         }
       });
     },
