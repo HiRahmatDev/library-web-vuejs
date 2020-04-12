@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath: 'library-deploy/',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/library-deploy/'
+    : '/',
 };
