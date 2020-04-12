@@ -67,7 +67,7 @@ export default {
       email: '',
       password: '',
       error: false,
-      code: '',
+      code: null,
     };
   },
   methods: {
@@ -105,7 +105,9 @@ export default {
       const that = this;
       this.code = 0;
       this.error = 'please wait...';
-      axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/send`, { name: req.data.result.fullname }, {
+      axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/send`, {
+        name: req.data.result.fullname,
+      }, {
         headers: { 'x-access-token': req.data.result.token },
       })
         .then((res) => {

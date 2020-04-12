@@ -8,11 +8,19 @@
   background-color: white;
   z-index: 5;
   display: flex;
-  box-shadow: 0 4px 7px #0000003a;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.122);
   padding: 12px 3%;
   justify-content: space-between;
   box-sizing: border-box;
   transition: all ease .4s;
+  .navbar {
+    h1 {
+      font-size: 30px;
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-left: 10px;
+    }
+  }
   form.search {
     .grup-search {
       width: 406px;
@@ -181,9 +189,9 @@ form.search {
     }
   }
 }
-.carousel.nav-fixed {
-  margin-top: 75px;
-}
+// .carousel.nav-fixed {
+//   margin-top: 75px;
+// }
 .carousel {
   position: relative;
   display: flex;
@@ -333,7 +341,8 @@ button.prev-btn {
   }
   height: 100%;
   background-color: white;
-  box-shadow: 4px 0 7px #0000003a;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.122);
+  // box-shadow: 4px 0 7px #0000003a;
   z-index: 6;
   .container.center {
     display: flex;
@@ -473,6 +482,7 @@ button.prev-btn {
 .to-fixed {
   position: fixed;
   margin-top: -75px;
+  top: 75px;
 }
 
 .to-fixed.nav-active {

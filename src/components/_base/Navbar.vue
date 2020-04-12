@@ -2,13 +2,19 @@
   <nav class="nav to-fixed" >
     <div class="navbar">
       <div class="burger">
-        <a @click="$emit('burgerClicked')" >
+        <a v-if="namePage === 'dashboard'" @click="$emit('burgerClicked')" >
           <img src="@/assets/img/svg/burger.svg" alt="">
         </a>
+        <router-link v-if="namePage === 'history' || namePage === 'loan'"
+                     to="/dashboard" class="btn-back">
+          <img src="@/assets/img/svg/arrow.svg" alt="">
+        </router-link>
       </div>
-      <ul>
+      <h1 v-if="namePage === 'history' || namePage === 'loan'" >{{ namePage }}</h1>
+      <ul v-if="namePage === 'dashboard'" >
         <li>
-          <div class="category-sort">All Categories</div>
+          <div class="category-sort"
+               @click="$emit('category-clicked', $event.target)" >All Categories</div>
           <ul class="dropdown">
             <li @click="sort" >All Categories</li>
             <li v-for="c in category" :key="c.id" @click="sort" >{{ c.name_category }}</li>
@@ -18,7 +24,8 @@
           </ul>
         </li>
         <li>
-          <div class="time-sort">All Time</div>
+          <div class="time-sort"
+               @click="$emit('time-clicked', $event.target)" >All Time</div>
           <ul class="dropdown">
             <li>All Time</li>
             <li>Last hour</li>
@@ -28,7 +35,7 @@
         </li>
       </ul>
     </div>
-    <form @submit.prevent="$emit('enter')" class="search">
+    <form v-if="namePage === 'dashboard'" @submit.prevent="$emit('enter')" class="search">
       <div class="grup-search">
         <button><img src="@/assets/img/magnifying-glass.png" alt=""></button>
         <input v-model="inputSearch"
@@ -47,6 +54,7 @@ import axios from 'axios';
 
 export default {
   name: 'Navbar',
+  props: ['namePage'],
   data() {
     return {
       inputSearch: null,
@@ -59,14 +67,14 @@ export default {
       if (el.target.innerHTML !== 'List Book' && el.target.innerHTML !== 'All Categories') {
         axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book?search=${el.target.innerHTML.toLowerCase()}`)
           .then((res) => {
-            sortBook = res.data.result;
-            this.$emit('sort-book', sortBook);
+            sortBook = res.data;
+            this.$emit('sort-category', sortBook);
           });
       } else {
         axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book`)
           .then((res) => {
-            sortBook = res.data.result;
-            this.$emit('sort-book', sortBook);
+            sortBook = res.data;
+            this.$emit('sort-category', sortBook);
           });
       }
     },
@@ -74,7 +82,7 @@ export default {
       let searchBook = [];
       axios(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book?search=${this.inputSearch.toLowerCase()}`)
         .then((res) => {
-          searchBook = res.data.result;
+          searchBook = res.data;
           this.$emit('search-book', searchBook, this.inputSearch);
         });
     },

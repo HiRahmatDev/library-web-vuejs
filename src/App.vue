@@ -47,10 +47,18 @@ body, input {
 .container {
   position: relative;
   width: 80%;
+  margin: 0 auto;
   @include layar(tablet) {
     width: 90%;
   }
+}
+.container-1 {
+  position: relative;
+  width: 90%;
   margin: 0 auto;
+  @include layar(tablet) {
+    width: 90%;
+  }
 }
 .baris {
   display: flex;
@@ -82,6 +90,15 @@ body, input {
   border: 2px solid black;
 }
 
+.btn.btn-table {
+  border: none;
+  font-weight: bolder;
+  border-radius: 50px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.055);
+  }
+}
+
 .bg-modal {
   position: fixed;
   top: 0;
@@ -100,21 +117,33 @@ body, input {
     transform: scale(.6);
     position: relative;
     width: 80%;
-    height: 120%;
+    max-height: 120%;
     box-sizing: border-box;
-    @include layar(tablet) {
-      width: 95%;
-      // height: 97%;
-      transform: scale(.8);
-    }
-    @include layar(hp) {
-      width: 95%;
-      height: 97%;
-      transform: scale(.8);
-    }
     background-color: white;
     border-radius: 15px;
     transition: transform ease .2s;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #dbdbdb;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      border-radius: 10px;
+    }
+    @include layar(tablet) {
+      width: 95%;
+      max-height: 97%;
+      transform: scale(.8);
+    }
+    @include layar(hp) {
+      max-width: 95%;
+      max-height: 97%;
+      transform: scale(.8);
+    }
     .modal-header {
       height: 120px;
       background-color: white;
@@ -154,18 +183,6 @@ body, input {
         margin-top: -50px;
         padding-right: 42px;
         height: 100%;
-        overflow-y: scroll;
-        &::-webkit-scrollbar {
-          width: 7px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #dbdbdb;
-          border-radius: 10px;
-        }
-        &::-webkit-scrollbar-track {
-          background-color: transparent;
-          border-radius: 10px;
-        }
         .baris {
           margin: 30px 0;
           @include layar(hp) {
@@ -199,14 +216,13 @@ body, input {
             font-size: 1em;
           }
         }
-
         input, textarea {
           resize: none;
           box-sizing: border-box;
           font-family: 'Airbnb Cereal App';
           font-size: 30px;
           font-weight: 500;
-          color: #C8BABA;
+          color: rgb(54, 54, 54);
           padding: 18px 22px;
           width: 100%;
           border-radius: 10px;;
@@ -215,6 +231,19 @@ body, input {
           @include layar(hp) {
             font-size: 1em;
             padding: 12px 15px;
+          }
+        }
+        textarea {
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: #dbdbdb;
+            border-radius: 10px;
+          }
+          &::-webkit-scrollbar-track {
+            background-color: transparent;
+            border-radius: 10px;
           }
         }
 

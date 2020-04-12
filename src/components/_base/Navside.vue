@@ -42,9 +42,12 @@
             <li>Last year</li>
           </ul>
         </li>
-        <li><router-link to="book"><p>Explore</p></router-link></li>
-        <li><router-link to="book/history"><p>History</p></router-link></li>
-        <li><a @click="$emit('show-modal')"><p>Add Book*</p></a></li>
+        <li><router-link to="/book"><p>Explore</p></router-link></li>
+        <li><router-link to="/book/loan"><p>Loan</p></router-link></li>
+        <li><router-link to="/book/history"><p>History</p></router-link></li>
+        <li v-if="user.role_id === 1 || user.role_id === 2" >
+          <a @click="$emit('show-modal')"><p>Add Book*</p></a>
+        </li>
         <li><router-link to="/logout"><p>Log Out</p></router-link></li>
       </ul>
     </div>
@@ -66,7 +69,7 @@ export default {
   },
   methods: {
     loadUser() {
-      const token = jwt.verify(localStorage.token, 'libraryku');
+      const token = jwt.verify(localStorage.token, process.env.VUE_APP_SECRET_KEY);
       const that = this;
       axios.get(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/user/${token.id}`)
         .then((res) => {
