@@ -167,7 +167,6 @@ export default {
           });
           Axios.post(`http://${process.env.VUE_APP_ROOT_URL}/api/v1/book/loan?user=${this.getIdUser()}&book=${this.bookDetail.id}`)
             .then((res) => {
-              console.log(res);
               this.$router.push('/book/loan');
             });
         }
