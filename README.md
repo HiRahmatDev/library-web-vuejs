@@ -8,7 +8,8 @@
 )
 
 <p align="center">
-  <img height="200" src="https://vuejs.org/images/logo.png">
+  <img height="100" src="./screenshots/library-logo.png">
+  <img height="100" src="https://vuejs.org/images/logo.png">
 </p>
 <p align="center">
   Built with Vue Js.
@@ -59,16 +60,15 @@ VUE_APP_SECRET_KEY=YOUR_API_KEY
 ## Screenshots
 
 <div align="center">
-    <img width="430" src="./images/login.jpg">   
-    <img width="430" src="./images/register.jpg">
+    <img width="860" src="./screenshots/library-landing.gif">
 </div>
 <div align="center">
-    <img width="430" src="./images/landing-loginmodal.gif">   
-    <img width="430" src="./images/tokosidia-product-detail.gif">
+    <img width="430" src="./screenshots/library-login.gif">   
+    <img width="430" src="./screenshots/library-register.png">
 </div>
 <div align="center">
-    <img width="430" src="./images/tokosidia-seller-detail.png">   
-    <img width="430" src="./images/tokosidia-user-detail.gif">
+    <img width="430" src="./screenshots/library-dashboard.gif">   
+    <img width="430" src="./screenshots/library-borrow-return.gif">
 </div>
 
 ## Related Project (Backend)
