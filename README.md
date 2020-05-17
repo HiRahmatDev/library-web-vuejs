@@ -1,4 +1,4 @@
-# Tokosidia (CLONE Tokopedia)
+# Library App
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/HiRahmat-Dev/library-web-vuejs)
 ![GitHub contributors](https://img.shields.io/github/contributors/HiRahmat-Dev/library-web-vuejs)
