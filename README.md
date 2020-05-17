@@ -61,17 +61,17 @@ VUE_APP_SECRET_KEY=YOUR_API_KEY
 
 
 <div align="center">
-    <p align="center">Landing Page</p>
+    <h4 align="center">LANDING PAGE</h4>
     <img width="860" src="./screenshots/library-landing.gif">
 </div>
 <br>
 <div align="center">
-    <p align="center">Login & Register Page</p>
+    <h4 align="center">LOGIN & REGISTER PAGE</h4>
     <img width="430" src="./screenshots/library-login.gif">
     <img width="430" src="./screenshots/library-register.png">
 </div>
 <div align="center">
-    <h5 align="center">Dashboard & Borrow Page</h5>
+    <h4 align="center">DASHBOARD & BORROW PAGE</h4>
     <img width="430" src="./screenshots/library-dashboard.gif">   
     <img width="430" src="./screenshots/library-borrow-return.gif">
 </div>
